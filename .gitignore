@@ -1,0 +1,5 @@
+.idea/*
+/target/*
+ios/*
+android/*
+?img?
