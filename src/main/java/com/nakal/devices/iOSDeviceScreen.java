@@ -38,15 +38,15 @@ public class iOSDeviceScreen implements DeviceInterface {
 
     public void captureScreenShot(String screenShotPath,String imagePath){
         utils.createDirectory();
-        imagePath = System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/baseline_images/"+screenShotPath+".jpeg";
+        //imagePath = System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/baseline_images/"+screenShotPath+".png";
         File f = new File(imagePath);
         if(f.exists()){
             System.out.println("BaseLine Image already Exists");
         }else{
             try {
                 try {
-                    System.out.println("idevicescreenshot " + System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/baseline_images/"+screenShotPath+".jpeg");
-                    commandPrompt.runCommand("idevicescreenshot " + System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/baseline_images/"+screenShotPath+".jpeg");
+                    System.out.println("idevicescreenshot " + System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/baseline_images/"+screenShotPath+".png");
+                    commandPrompt.runCommand("idevicescreenshot " + imagePath);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

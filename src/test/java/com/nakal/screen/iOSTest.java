@@ -1,5 +1,6 @@
 package com.nakal.screen;
 
+import com.nakal.ScreenExecutor.NakalExecutor;
 import com.nakal.capturescreen.ScreenShooter;
 import org.junit.Test;
 
@@ -9,10 +10,10 @@ import org.junit.Test;
 public class iOSTest {
 
     ScreenShooter screenShooter = new ScreenShooter();
-
+    NakalExecutor nakalExecutor = new NakalExecutor();
 
     @Test
     public void captureScreenShotFromDevice(){
-      screenShooter.screenCapture("iosTest","");
+        nakalExecutor.nakalExecutorCompareScreenAndCreateDiffImage("ActivityScreen");
     }
 }
