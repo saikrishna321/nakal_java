@@ -50,6 +50,12 @@ any difference will be put in the same directory with image file named "differen
 All image masks should and be stored at /ios/mask-images/fileName.png image mask should be saved.(mask images with transparent background has been created using gimp tool- eg:https://github.com/saikrishna321/nakal_java/tree/master/android/mask_images)
 MASKIMAGE value in the env should be the same fileName which is stored under the mask_images.
 
+#Running the tests
+
+PLATFORM="android" NAKAL_MODE="build" MASKIMAGE="oneplus" mvn clean -Dtest=AndroidTest test (captures a baseline image)
+
+PLATFORM="android" NAKAL_MODE="compare" MASKIMAGE="oneplus" mvn clean -Dtest=AndroidTest test ( compares expected and actual image)
+
 Ruby Client::https://github.com/rajdeepv/nakal
 
 <h2>WIP</h2>
