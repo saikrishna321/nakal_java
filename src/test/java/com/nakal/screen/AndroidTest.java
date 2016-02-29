@@ -26,10 +26,9 @@ public class AndroidTest {
 
     @Test
     public void verifyImagesAreSimilar() throws InterruptedException, IOException, IM4JavaException {
-   /*     boolean imagePixels = imageUtil.compareImages(System.getProperty("user.dir") + "/testImages/ActivityScreen.png",
+        boolean imagePixels = imageUtil.compareImages(System.getProperty("user.dir") + "/testImages/ActivityScreen.png",
                 System.getProperty("user.dir") + "/testImages/ActivityScreen.png");
-        Assert.assertTrue(imagePixels);*/
-           Assert.assertTrue(nakalExecutor.nakalExecutorCompareScreenAndCreateDiffImage("ActivityScreen"));
+        Assert.assertTrue(imagePixels);
 
     }
 
@@ -61,6 +60,11 @@ public class AndroidTest {
         imageUtil.maskImage("/Users/saikrisv/Desktop/ActivityScreenReference.png",
                 "/Users/saikrisv/Desktop/ActivityScreenMaskImage.png",
                 "/Users/saikrisv/Desktop/masked.png");
+    }
+
+    @Test
+    public void compareImagesExecutor(){
+        Assert.assertTrue(nakalExecutor.nakalExecutorCompareScreenAndCreateDiffImage("ActivityScreen"));
     }
 
 }
