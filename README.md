@@ -19,7 +19,7 @@ Add this to your pom.xml
 <dependency>
 	    <groupId>com.github.saikrishna321</groupId>
 	    <artifactId>nakal_java</artifactId>
-	    <version>d6f95906ef</version>
+	    <version>f4dcb0054e</version>
 	</dependency>
 ```
 
@@ -62,16 +62,16 @@ PLATFORM="android" APP="native" NAKAL_MODE="build" MASKIMAGE="oneplus" mvn clean
 
 PLATFORM="android" APP="native" NAKAL_MODE="compare" MASKIMAGE="oneplus" mvn clean -Dtest=AndroidTest test ( compares expected and actual image)
 
-<h1>Comparing images in web application - For - Appium,Selendroid(PLATFORM=android/ios) and WebDriver(PLATFORM=Desktop)</h1>
+<h1>Comparing images on web application</h1>
+For Appium,Selendroid(PLATFORM=android/ios) and WebDriver(PLATFORM=Desktop)
 
 PLATFORM="Desktop" APP="web" NAKAL_MODE="build" mvn clean -Dtest=WebDriverTest test (captures a baseline image)
 
 PLATFORM="Desktop" APP="web" NAKAL_MODE="compare" mvn clean -Dtest=WebDriverTest test ( compares expected and actual image)
 
-Ruby Client::https://github.com/rajdeepv/nakal
 
-<h2>WIP</h2>
-  Handling WebScreenshot capture with Webdriver and Appium
+<h2>Ruby Client</h2>
+	https://github.com/rajdeepv/nakal
 
 
 ## Contributing
