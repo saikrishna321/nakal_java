@@ -2,6 +2,7 @@ package com.nakal.devices;
 
 import com.nakal.utils.CommandPrompt;
 import com.nakal.utils.Utils;
+import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +46,6 @@ public class iOSDeviceScreen implements DeviceInterface {
         }else{
             try {
                 try {
-                    System.out.println("idevicescreenshot " + System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/baseline_images/"+screenShotPath+".png");
                     commandPrompt.runCommand("idevicescreenshot " + imagePath);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -54,6 +54,14 @@ public class iOSDeviceScreen implements DeviceInterface {
                 e.printStackTrace();
             }
         }
+
+    }
+
+    public void captureScreenShot(WebDriver driver, String imagePath) {
+
+    }
+
+    public void captureScreenShot(WebDriver driver, String filePath, String imagePath) {
 
     }
 

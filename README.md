@@ -33,12 +33,16 @@ For Example:
 
 ```
 NakalExecutor nakalExecutor = new NakalExecutor();
-
-    @Test
-    public void captureScreenShotFromDevice(){
-        nakalExecutor.nakalExecutorCompareScreenAndCreateDiffImage("current_screen_name");
-    }
-
+     //Compare mobile native app screen
+     @Test
+     public void compareImagesExecutor(){
+         Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("ActivityScreen"));
+     }
+     //Compare mobile-web/desktop-browser app screen
+     @Test
+     public void compareImagesExecutor(){
+         Assert.assertTrue(nakalExecutor.nakalExecutorWebCompare(driver, "GoogleScreen"));
+      }
 ```
 
 
@@ -52,9 +56,17 @@ MASKIMAGE value in the env should be the same fileName which is stored under the
 
 #Running the tests
 
-PLATFORM="android" NAKAL_MODE="build" MASKIMAGE="oneplus" mvn clean -Dtest=AndroidTest test (captures a baseline image)
+<h1>Comparing images on native applications</h1>
 
-PLATFORM="android" NAKAL_MODE="compare" MASKIMAGE="oneplus" mvn clean -Dtest=AndroidTest test ( compares expected and actual image)
+PLATFORM="android" APP="native" NAKAL_MODE="build" MASKIMAGE="oneplus" mvn clean -Dtest=AndroidTest test (captures a baseline image)
+
+PLATFORM="android" APP="native" NAKAL_MODE="compare" MASKIMAGE="oneplus" mvn clean -Dtest=AndroidTest test ( compares expected and actual image)
+
+<h1>Comparing images in web application - For - Appium,Selendroid(PLATFORM=android/ios) and WebDriver(PLATFORM=Desktop)</h1>
+
+PLATFORM="Desktop" APP="web" NAKAL_MODE="build" mvn clean -Dtest=WebDriverTest test (captures a baseline image)
+
+PLATFORM="Desktop" APP="web" NAKAL_MODE="compare" mvn clean -Dtest=WebDriverTest test ( compares expected and actual image)
 
 Ruby Client::https://github.com/rajdeepv/nakal
 

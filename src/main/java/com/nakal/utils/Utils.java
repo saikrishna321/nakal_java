@@ -12,7 +12,7 @@ public class Utils {
 
     public File file;
     public void createDirectory(){
-        file = new File(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/baseline_images");
+        file = new File(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/"+System.getenv("APP")+"/baseline_images");
         if (!file.exists()) {
             if (file.mkdirs()) {
                 System.out.println("BaseLine Image Directory is created!");
@@ -21,17 +21,19 @@ public class Utils {
             }
         }
 
-        file = new File(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/mask_images");
-        if (!file.exists()) {
-            if (file.mkdirs()) {
-                System.out.println("Mask Image Directory is created!");
-            } else {
-                System.out.println("Failed to create BaseLine image directory!");
+        if(!System.getenv("APP").equalsIgnoreCase("web")){
+            file = new File(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/mask_images");
+            if (!file.exists()) {
+                if (file.mkdirs()) {
+                    System.out.println("Mask Image Directory is created!");
+                } else {
+                    System.out.println("Failed to create BaseLine image directory!");
+                }
             }
         }
 
-        deleteDirectory(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/actual_images");
-        file = new File(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/actual_images");
+        deleteDirectory(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/"+System.getenv("APP")+"/actual_images");
+        file = new File(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/"+System.getenv("APP")+"/actual_images");
         if (!file.exists()) {
             if (file.mkdirs()) {
                 System.out.println("Actual Image Directory is created!");

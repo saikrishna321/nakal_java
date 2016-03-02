@@ -12,6 +12,6 @@ public class iOSTest {
 
     @Test
     public void captureScreenShotFromDevice(){
-        nakalExecutor.nakalExecutorCompareScreenAndCreateDiffImage("ActivityScreen");
+        nakalExecutor.nakalExecutorNativeCompare("ActivityScreen");
     }
 }

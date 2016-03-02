@@ -4,4 +4,5 @@ ios/actual_images/*
 ios/baseline_images/*
 android/actual_images/*
 android/baseline_images/*
+android/native/*
 ?img?

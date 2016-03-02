@@ -5,6 +5,7 @@ import com.github.cosysoft.device.android.impl.AndroidDeviceStore;
 import com.github.cosysoft.device.image.ImageUtils;
 import com.nakal.imageutil.ImageUtil;
 import com.nakal.utils.Utils;
+import org.openqa.selenium.WebDriver;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -60,4 +61,8 @@ public class AndroidDeviceScreen implements DeviceInterface {
                 ImageUtils.writeToFile(image, imagePath);
             }
         }
+
+    public void captureScreenShot(WebDriver driver, String imagePath) {
+
     }
+}
