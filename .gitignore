@@ -6,3 +6,7 @@ android/actual_images/*
 android/baseline_images/*
 android/native/*
 ?img?
+Desktop/*
+android/web/*
+testImages/*
+nakal_java.iml

@@ -17,30 +17,6 @@ public class NakalExecutor extends ScreenShooter {
     ImageUtil imageUtil = new ImageUtil();
     WebScreen webScreen = new WebScreen();
     public File file;
-    /**
-     * @param baseLineImageName
-     * @return true if the images are similar else return false if not similar
-     */
-    public boolean nakalExecutorCompareScreenboolean(String baseLineImageName) {
-        String expectedImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/baseline_images/" + baseLineImageName + ".png";
-        if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
-            screenCapture(baseLineImageName,expectedImage);
-            return true;
-        } else if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
-            try {
-                String actualImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/actual_images/actual_" + baseLineImageName + ".png";
-                screenCapture("actual_" + baseLineImageName, actualImage);
-                return imageUtil.compareImages(expectedImage, actualImage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IM4JavaException e) {
-                e.printStackTrace();
-            }
-        }
-        return Boolean.parseBoolean(null);
-    }
 
     /**
      * @param baseLineImageName
@@ -84,41 +60,11 @@ public class NakalExecutor extends ScreenShooter {
                 if(imageUtil.compareImages(maskedExpectedImage, maskedActualImage, diffImage) == true){
                     return true;
                 }else{
-                    imageUtil.mergeImagesHorizontally(maskedExpectedImage,maskedActualImage,diffImage,mergedDiffImage);
+                    imageUtil.mergeImagesHorizontally(expectedImage,actualImage,diffImage,mergedDiffImage);
                     file= new File(diffImage);
                     file.delete();
                 }
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IM4JavaException e) {
-                e.printStackTrace();
-            }
-        }
-        return Boolean.parseBoolean(null);
-    }
-
-
-    /**
-     * @param baseLineImageName
-     * @param expectedImage
-     * @param actualImage
-     * @param diffImage
-     * @param pixelDifference
-     * @return true of the pixel difference btw the actual and expected images are with the range
-     */
-    public boolean nakalExecutorCompareScreen(String baseLineImageName, String expectedImage, String actualImage,  String diffImage,int pixelDifference) {
-        if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
-            String imagePath = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/baseline_images/" + baseLineImageName + ".png";
-            screenCapture(baseLineImageName, imagePath);
-            return true;
-        } else if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
-            try {
-                String imagePath = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/actual_images/actual_" + baseLineImageName + ".png";
-                screenCapture("actual_" + baseLineImageName, imagePath);
-                return imageUtil.compareImages(expectedImage, actualImage, diffImage, pixelDifference);
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {

@@ -20,7 +20,7 @@ public class WebDriverTest {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/chrome/chromedriver");
+        System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/chromedriver/chromedriver");
         driver = new ChromeDriver();
         Dimension d = new Dimension(1152,828);
         driver.manage().window().setSize(d);
@@ -35,7 +35,7 @@ public class WebDriverTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Assert.assertTrue(nakalExecutor.nakalExecutorWebCompare(driver, "GoogleScreen",20));
+        Assert.assertTrue(nakalExecutor.nakalExecutorWebCompare(driver, "GoogleScreen"));
     }
 
     @After
