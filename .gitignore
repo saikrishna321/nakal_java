@@ -10,3 +10,4 @@ Desktop/*
 android/web/*
 testImages/*
 nakal_java.iml
+src/main/java/com/nakal/capturescreen/Sample.java

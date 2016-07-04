@@ -1,0 +1,120 @@
+package com.nakal.utils;
+
+/**
+ * Created by saikrisv on 04/07/16.
+ */
+public class NativeCompare {
+    public String getExpectedImage() {
+        return expectedImage;
+    }
+
+    public void setExpectedImage(String baseLineImageName) {
+        this.expectedImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/baseline_images/" + baseLineImageName + ".png";
+        ;
+    }
+
+    public String getMaskedRegionExpectedImage() {
+        return maskedRegionExpectedImage;
+    }
+
+    public void setMaskedRegionExpectedImage(String baseLineImageName) {
+        this.maskedRegionExpectedImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/baseline_images/" + "maskedregion_" + baseLineImageName + ".png";
+        ;
+    }
+
+    public String getMaskImage() {
+        return maskImage;
+    }
+
+    public void setMaskImage() {
+        this.maskImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/mask_images/"
+                + System.getenv("MASKIMAGE") + ".png";
+    }
+
+    public String getMaskedExpectedImage() {
+        return maskedExpectedImage;
+    }
+
+    public void setMaskedExpectedImage(String baseLineImageName) {
+        this.maskedExpectedImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/baseline_images/" + "masked_" + baseLineImageName + ".png";
+        ;
+    }
+
+    String expectedImage;
+    String maskedRegionExpectedImage;
+    String maskImage;
+    String maskedExpectedImage;
+    String actualImage;
+    String actualMaskedRegionImage;
+
+    public String getMaskedActualImage() {
+        return maskedActualImage;
+    }
+
+    public void setMaskedActualImage(String baseLineImageName) {
+        this.maskedActualImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/actual_images/" + "masked_" + baseLineImageName + ".png";
+        ;
+    }
+
+    String maskedActualImage;
+
+    public String getMergedDiffImage() {
+        return mergedDiffImage;
+    }
+
+    public void setMergedDiffImage(String baseLineImageName) {
+        this.mergedDiffImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/actual_images/difference_" + baseLineImageName + ".png";
+        ;
+    }
+
+    String mergedDiffImage;
+
+    public String getDiffImage() {
+        return diffImage;
+    }
+
+    public void setDiffImage(String baseLineImageName) {
+        this.diffImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/actual_images/diff_" + baseLineImageName + ".png";
+        ;
+    }
+
+    String diffImage;
+
+    public String getActualImage() {
+        return actualImage;
+    }
+
+    public void setActualImage(String baseLineImageName) {
+        this.actualImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/actual_images/actual_" + baseLineImageName + ".png";
+        ;
+    }
+
+    public String getActualMaskedRegionImage() {
+        return actualMaskedRegionImage;
+    }
+
+    public void setActualMaskedRegionImage(String baseLineImageName) {
+        this.actualMaskedRegionImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/actual_images/actualmaskedregion_" + baseLineImageName + ".png";
+        ;
+    }
+
+
+
+}

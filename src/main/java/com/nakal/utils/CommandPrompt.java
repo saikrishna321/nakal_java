@@ -16,7 +16,7 @@ public class CommandPrompt {
 	/**
 	 * This method run command on windows and mac
 	 * 
-	 * @param strings
+	 * @param command
 	 *            to run
 	 */
 	public String runCommand(String command) throws InterruptedException, IOException {

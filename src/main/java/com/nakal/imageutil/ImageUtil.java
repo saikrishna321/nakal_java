@@ -2,11 +2,14 @@ package com.nakal.imageutil;
 
 import org.im4java.core.*;
 import org.im4java.process.ArrayListErrorConsumer;
+import org.yaml.snakeyaml.Yaml;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by saikrisv on 22/02/16.
@@ -94,7 +97,6 @@ public class ImageUtil {
             return false;
         }else{
             long totalPixelDifferne = Integer.parseInt(arrayListErrorConsumer.getOutput().get(0));
-
             double c = ((double) totalPixelDifferne / totalImagePixel) * 100;
             long finalPercentageDifference = Math.round(c);
             System.out.println("Difference in the images is ::" + finalPercentageDifference +"%");
@@ -142,7 +144,7 @@ public class ImageUtil {
         op1.addImage(expected); // source file
         op1.addImage(actual); // destination file file
         op1.addImage(diffImage);
-        op1.resize(1024,576);
+        //op1.resize(1024,576);
         op1.p_append();
         op1.addImage(mergedImage);
         cmd1.run(op1);
@@ -155,6 +157,48 @@ public class ImageUtil {
         int h = readImage.getHeight();
         int w = readImage.getWidth();
         return h * w;
+    }
+
+    public void maskRegions(String imageToMaskRegion,String imageMasked,String screenName)
+        throws InterruptedException, IOException, IM4JavaException {
+
+        if(checkIfMaskRegionExists(screenName)){
+            ConvertCmd reg = new ConvertCmd();
+            IMOperation rep_op = new IMOperation();
+            rep_op.addImage(imageToMaskRegion);
+            rep_op.fill("Blue");
+            rep_op.draw(fetchValueFromYaml(screenName));
+            rep_op.addImage(imageMasked);
+            reg.run(rep_op);
+        }
+    }
+
+    public String fetchValueFromYaml(String screenName) throws FileNotFoundException {
+            Set mask_region =
+                ((LinkedHashMap)((LinkedHashMap)getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)).entrySet();
+            String maskingRegions = "";
+            for(Object regions : mask_region){
+                maskingRegions =  maskingRegions + " rectangle "
+                    + regions.toString().split("=")[1].toString().replace("[","").replace("]","").trim();
+            }
+        return maskingRegions;
+    }
+
+    public boolean checkIfMaskRegionExists(String screenName) throws FileNotFoundException {
+        if((getYamlParams().get(System.getenv("MASKIMAGE")))!=null){
+            if(((LinkedHashMap)getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)!=null){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Map<String, Object> getYamlParams() throws FileNotFoundException {
+        final String fileName = System.getProperty("user.dir")+"/nakal.yaml";
+        Yaml yaml = new Yaml();
+        InputStream yamlParams = new FileInputStream(new File(fileName));
+        Map<String,Object> result = (Map<String,Object>)yaml.load(yamlParams);
+        return result;
     }
 
 }

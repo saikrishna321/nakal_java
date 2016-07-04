@@ -3,6 +3,7 @@ package com.nakal.ScreenExecutor;
 import com.nakal.capturescreen.ScreenShooter;
 import com.nakal.devices.WebScreen;
 import com.nakal.imageutil.ImageUtil;
+import com.nakal.utils.NativeCompare;
 import org.im4java.core.IM4JavaException;
 import org.openqa.selenium.WebDriver;
 
@@ -16,53 +17,35 @@ public class NakalExecutor extends ScreenShooter {
 
     ImageUtil imageUtil = new ImageUtil();
     WebScreen webScreen = new WebScreen();
+    NativeCompare nativeCompare = new NativeCompare();
     public File file;
 
     /**
      * @param baseLineImageName
      * @return false if actual and expected images are not similar and generate a difference Image
      */
-    public boolean nakalExecutorNativeCompare(String baseLineImageName) {
-        String expectedImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")+"/"+System.getenv("APP") + "/baseline_images/" + baseLineImageName + ".png";
-        String maskImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/mask_images/" + System.getenv("MASKIMAGE") + ".png";
-        String maskedExpectedImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/baseline_images/"+"masked_"+baseLineImageName + ".png";
+    public boolean nakalExecutorNativeCompare(String baseLineImageName)
+        throws InterruptedException, IOException, IM4JavaException {
+        return compareTwoImages(baseLineImageName);
+    }
+
+    private boolean compareTwoImages(String baseLineImageName)
+        throws InterruptedException, IOException, IM4JavaException {
+        initialize(baseLineImageName);
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
-            screenCapture(baseLineImageName, expectedImage);
-            try {
-                //Cropped the notification bar and create a maskImage to compare
-                imageUtil.maskImage(expectedImage,maskImage,maskedExpectedImage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IM4JavaException e) {
-                e.printStackTrace();
-            }
-            return true;
+            return buildMode(baseLineImageName);
         } else if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
             try {
-                String actualImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/"+System.getenv("APP")+"/actual_images/actual_" + baseLineImageName + ".png";
-                String diffImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/diff_" + baseLineImageName + ".png";
-                String mergedDiffImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/difference_" + baseLineImageName + ".png";
-                String maskedActualImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/"+"masked_"+baseLineImageName + ".png";
-                screenCapture("actual_" + baseLineImageName, actualImage);
-                try {
-                    //Cropped the notification bar and create a maskImage to compare
-                    imageUtil.maskImage(actualImage,maskImage,maskedActualImage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IM4JavaException e) {
-                    e.printStackTrace();
-                }
+                screenCaptureAndMaskRegionsIfPresent(baseLineImageName,
+                    "actual_" + baseLineImageName, nativeCompare.getActualImage(),
+                    nativeCompare.getActualMaskedRegionImage(),
+                    nativeCompare.getMaskedActualImage());
 
-                if(imageUtil.compareImages(maskedExpectedImage, maskedActualImage, diffImage) == true){
+                if (imageUtil.compareImages(nativeCompare.getMaskedExpectedImage(),
+                    nativeCompare.getMaskedActualImage(), nativeCompare.getDiffImage()) == true) {
                     return true;
-                }else{
-                    imageUtil.mergeImagesHorizontally(expectedImage,actualImage,diffImage,mergedDiffImage);
-                    file= new File(diffImage);
-                    file.delete();
+                } else {
+                    mergerDiffHorizontal();
                 }
 
             } catch (IOException e) {
@@ -74,25 +57,69 @@ public class NakalExecutor extends ScreenShooter {
             }
         }
         return Boolean.parseBoolean(null);
+    }
+
+    private void screenCaptureAndMaskRegionsIfPresent(String baseLineImageName, String fileName,
+        String actualImage, String actualMaskedRegionImage, String maskedActualImage)
+        throws InterruptedException, IOException, IM4JavaException {
+        screenCapture(fileName, actualImage);
+
+        if (imageUtil.checkIfMaskRegionExists(baseLineImageName)) {
+            imageUtil.maskRegions(actualImage, actualMaskedRegionImage, baseLineImageName);
+            imageUtil.maskImage(actualMaskedRegionImage, nativeCompare.getMaskImage(),
+                maskedActualImage);
+        } else {
+            imageUtil.maskImage(actualImage, nativeCompare.getMaskImage(), maskedActualImage);
+        }
+    }
+
+    private boolean buildMode(String baseLineImageName)
+        throws InterruptedException, IOException, IM4JavaException {
+        screenCaptureAndMaskRegionsIfPresent(baseLineImageName, baseLineImageName,
+            nativeCompare.getExpectedImage(), nativeCompare.getMaskedRegionExpectedImage(),
+            nativeCompare.getMaskedExpectedImage());
+        return true;
+    }
+
+    private void initialize(String baseLineImageName) {
+        nativeCompare.setExpectedImage(baseLineImageName);
+        nativeCompare.setMaskedExpectedImage(baseLineImageName);
+        nativeCompare.setMaskedRegionExpectedImage(baseLineImageName);
+        nativeCompare.setMaskImage();
+        //Actual Params
+        nativeCompare.setActualImage(baseLineImageName);
+        nativeCompare.setActualMaskedRegionImage(baseLineImageName);
+        nativeCompare.setDiffImage(baseLineImageName);
+        nativeCompare.setMergedDiffImage(baseLineImageName);
+        nativeCompare.setMaskedActualImage(baseLineImageName);
     }
 
 
     public boolean nakalExecutorWebCompare(WebDriver driver, String baseLineImageName) {
-        String expectedImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")+"/"+System.getenv("APP") + "/baseline_images/" + baseLineImageName + ".png";
+        String expectedImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/baseline_images/" + baseLineImageName + ".png";
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
-            webScreen.captureScreenShot(driver,expectedImage);
+            webScreen.captureScreenShot(driver, expectedImage);
             return true;
         } else if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
             try {
-                String actualImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/"+System.getenv("APP")+"/actual_images/actual_" + baseLineImageName + ".png";
-                String diffImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/diff_" + baseLineImageName + ".png";
-                String mergedDiffImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/difference_" + baseLineImageName + ".png";
-                webScreen.captureScreenShot(driver,actualImage);
-                if(imageUtil.compareImages(expectedImage, actualImage, diffImage) == true){
+                String actualImage =
+                    System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                        .getenv("APP") + "/actual_images/actual_" + baseLineImageName + ".png";
+                String diffImage =
+                    System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                        .getenv("APP") + "/actual_images/diff_" + baseLineImageName + ".png";
+                String mergedDiffImage =
+                    System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                        .getenv("APP") + "/actual_images/difference_" + baseLineImageName + ".png";
+                webScreen.captureScreenShot(driver, actualImage);
+                if (imageUtil.compareImages(expectedImage, actualImage, diffImage) == true) {
                     return true;
-                }else{
-                    imageUtil.mergeImagesHorizontally(expectedImage,actualImage,diffImage,mergedDiffImage);
-                    file= new File(diffImage);
+                } else {
+                    imageUtil.mergeImagesHorizontally(expectedImage, actualImage, diffImage,
+                        mergedDiffImage);
+                    file = new File(diffImage);
                     file.delete();
                 }
             } catch (IOException e) {
@@ -107,24 +134,35 @@ public class NakalExecutor extends ScreenShooter {
     }
 
 
-    public boolean nakalExecutorWebCompare(WebDriver driver, String baseLineImageName,int threshold) {
-        String expectedImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")+"/"+System.getenv("APP") + "/baseline_images/" + baseLineImageName + ".png";
+    public boolean nakalExecutorWebCompare(WebDriver driver, String baseLineImageName,
+        int threshold) {
+        String expectedImage =
+            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                .getenv("APP") + "/baseline_images/" + baseLineImageName + ".png";
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
-            webScreen.captureScreenShot(driver,expectedImage);
+            webScreen.captureScreenShot(driver, expectedImage);
             return true;
         } else if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
             try {
-                String actualImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/"+System.getenv("APP")+"/actual_images/actual_" + baseLineImageName + ".png";
-                String diffImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/diff_" + baseLineImageName + ".png";
-                String mergedDiffImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/difference_" + baseLineImageName + ".png";
-                webScreen.captureScreenShot(driver,actualImage);
-                if(imageUtil.compareImages(expectedImage, actualImage, diffImage , threshold) == true){
-                    file= new File(diffImage);
+                String actualImage =
+                    System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                        .getenv("APP") + "/actual_images/actual_" + baseLineImageName + ".png";
+                String diffImage =
+                    System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                        .getenv("APP") + "/actual_images/diff_" + baseLineImageName + ".png";
+                String mergedDiffImage =
+                    System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
+                        .getenv("APP") + "/actual_images/difference_" + baseLineImageName + ".png";
+                webScreen.captureScreenShot(driver, actualImage);
+                if (imageUtil.compareImages(expectedImage, actualImage, diffImage, threshold)
+                    == true) {
+                    file = new File(diffImage);
                     file.delete();
                     return true;
-                }else{
-                    imageUtil.mergeImagesHorizontally(expectedImage,actualImage,diffImage,mergedDiffImage);
-                    file= new File(diffImage);
+                } else {
+                    imageUtil.mergeImagesHorizontally(expectedImage, actualImage, diffImage,
+                        mergedDiffImage);
+                    file = new File(diffImage);
                     file.delete();
                 }
             } catch (IOException e) {
@@ -139,49 +177,27 @@ public class NakalExecutor extends ScreenShooter {
     }
 
 
-    public boolean nakalExecutorNativeCompare(String baseLineImageName,int threshold) {
-        String expectedImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")+"/"+System.getenv("APP") + "/baseline_images/" + baseLineImageName + ".png";
-        String maskImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/mask_images/" + System.getenv("MASKIMAGE") + ".png";
-        String maskedExpectedImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/baseline_images/"+"masked_"+baseLineImageName + ".png";
+    public boolean nakalExecutorNativeCompare(String baseLineImageName, int threshold)
+        throws InterruptedException, IOException, IM4JavaException {
+        initialize(baseLineImageName);
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
-            screenCapture(baseLineImageName, expectedImage);
-            try {
-                //Cropped the notification bar and create a maskImage to compare
-                imageUtil.maskImage(expectedImage,maskImage,maskedExpectedImage);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IM4JavaException e) {
-                e.printStackTrace();
-            }
-            return true;
+            return buildMode(baseLineImageName);
         } else if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
             try {
-                String actualImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/"+System.getenv("APP")+"/actual_images/actual_" + baseLineImageName + ".png";
-                String diffImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/diff_" + baseLineImageName + ".png";
-                String mergedDiffImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/difference_" + baseLineImageName + ".png";
-                String maskedActualImage = System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") +"/"+System.getenv("APP")+ "/actual_images/"+"masked_"+baseLineImageName + ".png";
-                screenCapture("actual_" + baseLineImageName, actualImage);
-                try {
-                    //Cropped the notification bar and create a maskImage to compare
-                    imageUtil.maskImage(actualImage,maskImage,maskedActualImage);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IM4JavaException e) {
-                    e.printStackTrace();
-                }
+                screenCaptureAndMaskRegionsIfPresent(baseLineImageName,
+                    "actual_" + baseLineImageName, nativeCompare.getActualImage(),
+                    nativeCompare.getActualMaskedRegionImage(),
+                    nativeCompare.getMaskedActualImage());
 
-                if(imageUtil.compareImages(maskedExpectedImage, maskedActualImage, diffImage, threshold) == true){
-                    file= new File(diffImage);
+                if (imageUtil
+                    .compareImages(nativeCompare.getMaskedExpectedImage(),
+                        nativeCompare.getMaskedActualImage(), nativeCompare.getDiffImage(), threshold)
+                    == true) {
+                    file = new File(nativeCompare.getDiffImage());
                     file.delete();
                     return true;
-                }else{
-                    imageUtil.mergeImagesHorizontally(maskedExpectedImage,maskedActualImage,diffImage,mergedDiffImage);
-                    file= new File(diffImage);
-                    file.delete();
+                } else {
+                    mergerDiffHorizontal();
                 }
 
             } catch (IOException e) {
@@ -193,6 +209,14 @@ public class NakalExecutor extends ScreenShooter {
             }
         }
         return Boolean.parseBoolean(null);
+    }
+
+    private void mergerDiffHorizontal() throws InterruptedException, IOException, IM4JavaException {
+        imageUtil.mergeImagesHorizontally(nativeCompare.getExpectedImage(),
+            nativeCompare.getActualImage(), nativeCompare.getDiffImage(),
+            nativeCompare.getMergedDiffImage());
+        file = new File(nativeCompare.getDiffImage());
+        file.delete();
     }
 
 }

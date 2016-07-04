@@ -51,12 +51,13 @@ public class AndroidTest {
 
 
     @Test
-    public void compareImagesExecutor(){
-        Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("ActivityScreen"));
+    public void compareImagesExecutor() throws InterruptedException, IOException, IM4JavaException {
+        Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("HomeScreen"));
     }
 
     @Test
-    public void compareImagesWithPixelDifference(){
+    public void compareImagesWithPixelDifference()
+        throws InterruptedException, IOException, IM4JavaException {
         Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("ActivityScreen",3));
     }
 
