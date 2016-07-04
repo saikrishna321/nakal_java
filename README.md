@@ -37,7 +37,7 @@ NakalExecutor nakalExecutor = new NakalExecutor();
      //Compare mobile native app screen
      @Test
      public void compareImagesExecutor(){
-         Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("ActivityScreen"));
+         Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("HomeScreen"));
      }
      //Compare mobile-web/desktop-browser app screen
      @Test
@@ -52,16 +52,16 @@ NakalExecutor nakalExecutor = new NakalExecutor();
 2. Once baseline is built, next execution onwards, start using environment variable NAKAL_MODE=compare to compare against baseline.
 any difference will be put in the same directory with image file named "difference_current_screen_name.png"
 
-All image masks should and be stored at /ios/mask-images/fileName.png image mask should be saved.(mask images with transparent background has been created using gimp tool- eg:https://github.com/saikrishna321/nakal_java/tree/master/android/mask_images)
-MASKIMAGE value in the env should be the same fileName which is stored under the mask_images.
+All mask images should and be stored at /ios/mask-images/fileName.png /android/mask-images/fileName.png.(mask images with transparent background has been created using gimp tool- eg:https://github.com/saikrishna321/nakal_java/tree/master/android/mask_images)
+MASKIMAGE value in the env should be the same fileName which is stored under the mask_images(For ex: ./mask_images/nexus5.png and MASKIMAGE="nexus5").
 
 #Running the tests
 
 <h1>Comparing images on native applications</h1>
 
-PLATFORM="android" APP="native" NAKAL_MODE="build" MASKIMAGE="oneplus" mvn clean -Dtest=AndroidTest test (captures a baseline image)
+PLATFORM="android" APP="native" NAKAL_MODE="build" MASKIMAGE="nexus5" mvn clean -Dtest=AndroidTest test (captures a baseline image)
 
-PLATFORM="android" APP="native" NAKAL_MODE="compare" MASKIMAGE="oneplus" mvn clean -Dtest=AndroidTest test ( compares expected and actual image)
+PLATFORM="android" APP="native" NAKAL_MODE="compare" MASKIMAGE="nexus5" mvn clean -Dtest=AndroidTest test ( compares expected and actual image)
 
 <h1>Comparing images on web application</h1>
 For Appium,Selendroid(PLATFORM=android/ios) and WebDriver(PLATFORM=Desktop)
@@ -69,6 +69,22 @@ For Appium,Selendroid(PLATFORM=android/ios) and WebDriver(PLATFORM=Desktop)
 PLATFORM="Desktop" APP="web" NAKAL_MODE="build" mvn clean -Dtest=WebDriverTest test (captures a baseline image)
 
 PLATFORM="Desktop" APP="web" NAKAL_MODE="compare" mvn clean -Dtest=WebDriverTest test ( compares expected and actual image)
+
+## Ignore certain regions of the image
+
+1. Create nakal.yaml under the root directory.
+2. You can specify the areas of a screen you want to mask/ignore while comparing in nakal.yaml as below
+
+```
+nexus5:
+  HomeScreen: {mask_region_1: [69, 441, 357, 553],mask_region_2: [50, 1600, 371, 1652]}
+  SearchScreen: {mask_region_1: [66,424,340,478],mask_region_2: [76,524,440,578]}
+```
+3.If you want to set certain threshold while comparing. You can pass option as:
+
+```
+nakalExecutor.nakalExecutorNativeCompare("HomeScreen",3)
+```
 
 
 <h2>Ruby Client</h2>
