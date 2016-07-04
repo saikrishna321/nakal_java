@@ -2,6 +2,8 @@
 
 Automated visual testing of Android/iOS/Web applications.
 
+![ScreenShot](https://raw.githubusercontent.com/saikrishna321/nakal_java/master/difference_HomeScreen1.png)
+
 Nakal is used to add visual validations in your existing test framework (using appium or selenium-webDriver etc).
 
 ## Installation
