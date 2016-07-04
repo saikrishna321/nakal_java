@@ -28,6 +28,7 @@ Add this to your pom.xml
 Environment Varaibles should hold  
   * PLATFORM=ios/android
   * MASKIMAGE=image which needs to be considered for masking
+  * NAKAL_MODE=build/compare
 
 For Example:
 
@@ -46,9 +47,9 @@ NakalExecutor nakalExecutor = new NakalExecutor();
 ```
 
 
-Now, execute your test by passing env variable NAKAL_MODE=build to build the baseline images. All baseline images will be stored in baseline_images folder in current directory
+1. Now, execute your test by passing env variable NAKAL_MODE=build to build the baseline images. All baseline images will be stored in baseline_images folder in current directory
 
-once baseline is built, next execution onwards, start using environment variable NAKAL_MODE=compare to compare against baseline.
+2. Once baseline is built, next execution onwards, start using environment variable NAKAL_MODE=compare to compare against baseline.
 any difference will be put in the same directory with image file named "difference_current_screen_name.png"
 
 All image masks should and be stored at /ios/mask-images/fileName.png image mask should be saved.(mask images with transparent background has been created using gimp tool- eg:https://github.com/saikrishna321/nakal_java/tree/master/android/mask_images)
