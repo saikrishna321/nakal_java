@@ -26,9 +26,8 @@ public class ImageUtil {
      * @throws InterruptedException
      * @throws IM4JavaException
      */
-    public boolean compareImages(String actualImage,
-                                 String expectedImage, String diffImage) throws IOException,
-            InterruptedException, IM4JavaException {
+    public boolean compareImages(String actualImage, String expectedImage, String diffImage)
+        throws IOException, InterruptedException, IM4JavaException {
         IMOps cmpOp = new IMOperation();
         cmpOp.metric("AE");
         cmpOp.fuzz(10.00);
@@ -46,7 +45,9 @@ public class ImageUtil {
                 compare.run(cmpOp, actualImage, expectedImage, diffImage);
 
             } catch (Throwable e1) {
-                System.out.println("Total Pixel Difference of the Images:::" + arrayListErrorConsumer.getOutput().get(0));
+                System.out.println(
+                    "Total Pixel Difference of the Images:::" + arrayListErrorConsumer.getOutput()
+                        .get(0));
             }
             return false;
         }
@@ -65,9 +66,8 @@ public class ImageUtil {
      * @throws InterruptedException
      * @throws IM4JavaException
      */
-    public boolean compareImages(String actualImage,
-                                 String expectedImage) throws IOException,
-            InterruptedException, IM4JavaException {
+    public boolean compareImages(String actualImage, String expectedImage)
+        throws IOException, InterruptedException, IM4JavaException {
         IMOps cmpOp = new IMOperation();
         cmpOp.metric("AE");
         cmpOp.fuzz(10.00);
@@ -89,17 +89,17 @@ public class ImageUtil {
      * @param value       set the ignore % of image pixels
      * @throws IOException
      */
-    public boolean compareImages(String expectedImage, String actualImage,String diffImage, int value)
-            throws IOException, IM4JavaException, InterruptedException {
-        compareImages(actualImage, expectedImage,diffImage);
+    public boolean compareImages(String expectedImage, String actualImage, String diffImage,
+        int value) throws IOException, IM4JavaException, InterruptedException {
+        compareImages(actualImage, expectedImage, diffImage);
         long totalImagePixel = getCompleteImagePixel(actualImage);
-        if(arrayListErrorConsumer.getOutput().get(0).contains("+") == true){
+        if (arrayListErrorConsumer.getOutput().get(0).contains("+") == true) {
             return false;
-        }else{
+        } else {
             long totalPixelDifferne = Integer.parseInt(arrayListErrorConsumer.getOutput().get(0));
             double c = ((double) totalPixelDifferne / totalImagePixel) * 100;
             long finalPercentageDifference = Math.round(c);
-            System.out.println("Difference in the images is ::" + finalPercentageDifference +"%");
+            System.out.println("Difference in the images is ::" + finalPercentageDifference + "%");
             try {
                 if (finalPercentageDifference <= value) {
                     return true;
@@ -118,9 +118,8 @@ public class ImageUtil {
      * @throws InterruptedException
      * @throws IM4JavaException
      */
-    public void maskImage(String actualImage, String maskImage,
-                                 String maskedImage) throws IOException, InterruptedException,
-            IM4JavaException {
+    public void maskImage(String actualImage, String maskImage, String maskedImage)
+        throws IOException, InterruptedException, IM4JavaException {
         IMOperation op = new IMOperation();
         op.addImage(actualImage);
         op.addImage(maskImage);
@@ -137,8 +136,8 @@ public class ImageUtil {
      * @throws IOException
      * @throws IM4JavaException
      */
-    public void mergeImagesHorizontally(String expected, String actual, String diffImage, String mergedImage)
-            throws InterruptedException, IOException, IM4JavaException {
+    public void mergeImagesHorizontally(String expected, String actual, String diffImage,
+        String mergedImage) throws InterruptedException, IOException, IM4JavaException {
         ConvertCmd cmd1 = new ConvertCmd();
         IMOperation op1 = new IMOperation();
         op1.addImage(expected); // source file
@@ -159,34 +158,41 @@ public class ImageUtil {
         return h * w;
     }
 
-    public void maskRegions(String imageToMaskRegion,String imageMasked,String screenName)
+    public void maskRegions(String imageToMaskRegion, String imageMasked, String screenName)
         throws InterruptedException, IOException, IM4JavaException {
+            if (checkIfMaskRegionExists(screenName)) {
+                drawRectangleToIgnore(imageToMaskRegion, imageMasked, screenName);
+            }
+    }
 
-        if(checkIfMaskRegionExists(screenName)){
-            ConvertCmd reg = new ConvertCmd();
-            IMOperation rep_op = new IMOperation();
-            rep_op.addImage(imageToMaskRegion);
-            rep_op.fill("Blue");
-            rep_op.draw(fetchValueFromYaml(screenName));
-            rep_op.addImage(imageMasked);
-            reg.run(rep_op);
-        }
+    private void drawRectangleToIgnore(String imageToMaskRegion, String imageMasked,
+        String screenName) throws IOException, InterruptedException, IM4JavaException {
+        ConvertCmd reg = new ConvertCmd();
+        IMOperation rep_op = new IMOperation();
+        rep_op.addImage(imageToMaskRegion);
+        rep_op.fill("Blue");
+        rep_op.draw(fetchValueFromYaml(screenName));
+        rep_op.addImage(imageMasked);
+        reg.run(rep_op);
     }
 
     public String fetchValueFromYaml(String screenName) throws FileNotFoundException {
-            Set mask_region =
-                ((LinkedHashMap)((LinkedHashMap)getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)).entrySet();
-            String maskingRegions = "";
-            for(Object regions : mask_region){
-                maskingRegions =  maskingRegions + " rectangle "
-                    + regions.toString().split("=")[1].toString().replace("[","").replace("]","").trim();
-            }
+        Set mask_region =
+            ((LinkedHashMap) ((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE")))
+                .get(screenName)).entrySet();
+        String maskingRegions = "";
+        for (Object regions : mask_region) {
+            maskingRegions =
+                maskingRegions + " rectangle " + regions.toString().split("=")[1].toString()
+                    .replace("[", "").replace("]", "").trim();
+        }
         return maskingRegions;
     }
 
     public boolean checkIfMaskRegionExists(String screenName) throws FileNotFoundException {
-        if((getYamlParams().get(System.getenv("MASKIMAGE")))!=null){
-            if(((LinkedHashMap)getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)!=null){
+        if ((getYamlParams().get(System.getenv("MASKIMAGE"))) != null) {
+            if (((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)
+                != null) {
                 return true;
             }
         }
@@ -194,11 +200,17 @@ public class ImageUtil {
     }
 
     public Map<String, Object> getYamlParams() throws FileNotFoundException {
-        final String fileName = System.getProperty("user.dir")+"/nakal.yaml";
+        final String fileName = System.getProperty("user.dir") + "/nakal.yaml";
         Yaml yaml = new Yaml();
         InputStream yamlParams = new FileInputStream(new File(fileName));
-        Map<String,Object> result = (Map<String,Object>)yaml.load(yamlParams);
+        Map<String, Object> result = (Map<String, Object>) yaml.load(yamlParams);
         return result;
+    }
+
+    public boolean checkIfYamlFileExists() {
+        final String fileName = System.getProperty("user.dir") + "/nakal.yaml";
+        File file = new File(fileName);
+        return file.exists();
     }
 
 }

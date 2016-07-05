@@ -15,8 +15,8 @@ import java.io.IOException;
 public class WebScreen {
         Utils utils = new Utils();
 
-        public void captureScreenShot(WebDriver driver,String imagePath) {
-            utils.createDirectory();
+        public void captureScreenShot(WebDriver driver,String imagePath,String imageName) {
+            utils.createDirectory(imageName);
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             try {
                 FileUtils.copyFile(scrFile, new File(imagePath));

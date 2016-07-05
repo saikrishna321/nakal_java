@@ -25,8 +25,8 @@ public class AndroidDeviceScreen implements DeviceInterface {
     public AndroidDeviceScreen(){
         getDeviceConnected();
         if(checkIfDevicesAreConnected() == false){
-            System.out.println("No Devicec Connected.... Quiting the execution");
-            //System.exit(0);
+            System.out.println("No Devices Connected.... Quiting the execution");
+            System.exit(0);
         }
     }
 
@@ -51,7 +51,7 @@ public class AndroidDeviceScreen implements DeviceInterface {
 
 
     public void captureScreenShot(String arg,String imagePath) {
-            util.createDirectory();
+            util.createDirectory(arg);
             File f = new File(imagePath);
             if(f.exists()){
                 System.out.println("BaseLine Image already Exists");
