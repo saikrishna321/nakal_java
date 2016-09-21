@@ -160,9 +160,9 @@ public class ImageUtil {
 
     public void maskRegions(String imageToMaskRegion, String imageMasked, String screenName)
         throws InterruptedException, IOException, IM4JavaException {
-            if (checkIfMaskRegionExists(screenName)) {
-                drawRectangleToIgnore(imageToMaskRegion, imageMasked, screenName);
-            }
+        if (checkIfMaskRegionExists(screenName)) {
+            drawRectangleToIgnore(imageToMaskRegion, imageMasked, screenName);
+        }
     }
 
     private void drawRectangleToIgnore(String imageToMaskRegion, String imageMasked,
@@ -192,6 +192,8 @@ public class ImageUtil {
     public boolean checkIfMaskRegionExists(String screenName) throws FileNotFoundException {
         if ((getYamlParams().get(System.getenv("MASKIMAGE"))) != null) {
             if (((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)
+                != null
+                || ((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)
                 != null) {
                 return true;
             }

@@ -61,14 +61,14 @@ public class NakalExecutor extends ScreenShooter {
     private void screenCaptureAndMaskRegionsIfPresent(String baseLineImageName, String fileName,
         String actualImage, String actualMaskedRegionImage, String maskedActualImage)
         throws InterruptedException, IOException, IM4JavaException {
-
         screenCapture(fileName, actualImage);
-
         if (imageUtil.checkIfYamlFileExists()) {
             if (imageUtil.checkIfMaskRegionExists(baseLineImageName)) {
                 imageUtil.maskRegions(actualImage, actualMaskedRegionImage, baseLineImageName);
                 imageUtil.maskImage(actualMaskedRegionImage, nativeCompare.getMaskImage(),
                     maskedActualImage);
+            } else {
+                imageUtil.maskImage(actualImage, nativeCompare.getMaskImage(), maskedActualImage);
             }
         } else {
             imageUtil.maskImage(actualImage, nativeCompare.getMaskImage(), maskedActualImage);
@@ -97,18 +97,36 @@ public class NakalExecutor extends ScreenShooter {
     }
 
 
-    public boolean nakalExecutorWebCompare(WebDriver driver, String baseLineImageName) {
+    public boolean nakalExecutorWebCompare(WebDriver driver, String baseLineImageName)
+        throws IOException, InterruptedException, IM4JavaException {
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
             initialize(baseLineImageName);
             webScreen
                 .captureScreenShot(driver, nativeCompare.getExpectedImage(), baseLineImageName);
+            if (imageUtil.checkIfYamlFileExists()) {
+                if (imageUtil.checkIfMaskRegionExists(baseLineImageName)) {
+                    imageUtil.maskRegions(nativeCompare.getExpectedImage(),
+                        nativeCompare.getMaskedExpectedImage(), baseLineImageName);
+                }
+            }
+
             return true;
         } else if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
             initialize(baseLineImageName);
             try {
                 webScreen
                     .captureScreenShot(driver, nativeCompare.getActualImage(), baseLineImageName);
-                if (imageUtil
+                if (imageUtil.checkIfYamlFileExists()) {
+                    if (imageUtil.checkIfMaskRegionExists(baseLineImageName)) {
+                        imageUtil.maskRegions(nativeCompare.getActualImage(),
+                            nativeCompare.getMaskedActualImage(), baseLineImageName);
+                    }
+                    if (imageUtil.compareImages(nativeCompare.getMaskedExpectedImage(),
+                        nativeCompare.getMaskedActualImage(), nativeCompare.getDiffImage())
+                        == true) {
+                        return true;
+                    }
+                } else if (imageUtil
                     .compareImages(nativeCompare.getExpectedImage(), nativeCompare.getActualImage(),
                         nativeCompare.getDiffImage()) == true) {
                     return true;
@@ -205,6 +223,7 @@ public class NakalExecutor extends ScreenShooter {
         imageUtil.mergeImagesHorizontally(nativeCompare.getExpectedImage(),
             nativeCompare.getActualImage(), nativeCompare.getDiffImage(),
             nativeCompare.getMergedDiffImage());
+        Thread.sleep(1000);
         file = new File(nativeCompare.getDiffImage());
         file.delete();
     }

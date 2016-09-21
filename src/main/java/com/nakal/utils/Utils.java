@@ -13,7 +13,7 @@ public class Utils {
     public File file;
     public void createDirectory(String fileName){
         if(System.getenv("NAKAL_MODE").equalsIgnoreCase("build")){
-            deleteDirectory(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/"+System.getenv("APP")+"/baseline_images/");
+            deleteDirectory(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/"+System.getenv("APP")+"/baseline_images/"+fileName);
             file = new File(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/"+System.getenv("APP")+"/baseline_images/"+fileName);
             if (!file.exists()) {
                 if (file.mkdirs()) {
@@ -36,7 +36,7 @@ public class Utils {
             }
         }
 
-        deleteDirectory(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/"+System.getenv("APP")+"/actual_images/");
+        //deleteDirectory(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/"+System.getenv("APP")+"/actual_images/");
         file = new File(System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/"+System.getenv("APP")+"/actual_images/"+fileName);
         if (!file.exists()) {
             if (file.mkdirs()) {

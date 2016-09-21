@@ -1,7 +1,7 @@
 package com.nakal.screen;
 
 import com.nakal.ScreenExecutor.NakalExecutor;
-import junit.framework.Assert;
+import org.im4java.core.IM4JavaException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +9,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by saikrisv on 02/03/16.
@@ -28,14 +32,14 @@ public class WebDriverTest {
     }
 
     @Test
-    public void compareImages() {
+    public void compareImages() throws InterruptedException, IOException, IM4JavaException {
         driver.findElement(By.name("q")).sendKeys("Nakal_ImageCompare");
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Assert.assertTrue(nakalExecutor.nakalExecutorWebCompare(driver, "GoogleScreen"));
+        assertTrue(nakalExecutor.nakalExecutorWebCompare(driver, "GoogleScreen"));
     }
 
     @After

@@ -9,5 +9,5 @@ public interface DeviceInterface {
 
     public void captureScreenShot(String filePath,String imagePath);
 
-    public void captureScreenShot(WebDriver driver, String imagePath);
+    public void captureScreenShot(WebDriver driver, String imagePath,String imageName);
 }

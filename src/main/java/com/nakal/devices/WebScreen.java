@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by saikrisv on 29/02/16.
  */
-public class WebScreen {
+public class WebScreen implements DeviceInterface {
         Utils utils = new Utils();
 
         public void captureScreenShot(WebDriver driver,String imagePath,String imageName) {
@@ -25,4 +25,8 @@ public class WebScreen {
                 e.printStackTrace();
             }
         }
+
+    public void captureScreenShot(String filePath, String imagePath) {
+
     }
+}

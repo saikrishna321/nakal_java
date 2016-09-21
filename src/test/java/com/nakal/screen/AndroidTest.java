@@ -52,7 +52,10 @@ public class AndroidTest {
 
     @Test
     public void compareImagesExecutor() throws InterruptedException, IOException, IM4JavaException {
-        Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("HomeScreen"));
+        nakalExecutor.nakalExecutorNativeCompare("Login");
+        System.out.println("Second Screen");
+        Thread.sleep(5000);
+        nakalExecutor.nakalExecutorNativeCompare("MyTickets");
     }
 
     @Test

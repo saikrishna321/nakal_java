@@ -62,7 +62,8 @@ public class AndroidDeviceScreen implements DeviceInterface {
             }
         }
 
-    public void captureScreenShot(WebDriver driver, String imagePath) {
+    public void captureScreenShot(WebDriver driver, String imagePath, String imageName) {
 
     }
+
 }
