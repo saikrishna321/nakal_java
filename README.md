@@ -11,14 +11,14 @@ You need to install [imagemagick](http://www.imagemagick.org/script/index.php) o
 
 Add this to your pom.xml 
 ```
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
     
-<dependency>
+	<dependency>
 	    <groupId>com.github.saikrishna321</groupId>
 	    <artifactId>nakal_java</artifactId>
 	    <version>f4dcb0054e</version>
