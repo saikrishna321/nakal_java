@@ -31,16 +31,6 @@ public class WebDriverTest {
         driver.get("http://www.google.com");
     }
 
-    @Test
-    public void compareImages() throws InterruptedException, IOException, IM4JavaException {
-        driver.findElement(By.name("q")).sendKeys("Nakal_ImageCompare");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(nakalExecutor.nakalExecutorWebCompare(driver, "GoogleScreen"));
-    }
 
     @After
     public void tearDown() {

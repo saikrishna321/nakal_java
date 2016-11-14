@@ -22,20 +22,28 @@ public class AndroidDeviceScreen implements DeviceInterface {
     ImageUtil imageUtil = new ImageUtil();
     int deviceSize;
 
-    public AndroidDeviceScreen(){
+    public AndroidDeviceScreen() {
         getDeviceConnected();
-        if(checkIfDevicesAreConnected() == false){
+        if (checkIfDevicesAreConnected() == false) {
             System.out.println("No Devices Connected.... Quiting the execution");
             System.exit(0);
         }
     }
 
-    public TreeSet<AndroidDevice> getDeviceConnected() {
-        devices = AndroidDeviceStore.getInstance()
+    public AndroidDevice getDeviceConnected() {
+        if (System.getenv("UDID") == null || System.getenv("UDID").isEmpty()) {
+            devices = AndroidDeviceStore.getInstance()
                 .getDevices();
-        deviceSize = devices.size();
-        device = devices.pollFirst();
-        return devices;
+            deviceSize = devices.size();
+            device = devices.pollFirst();
+            return device;
+        } else {
+            device = AndroidDeviceStore.getInstance().getDeviceBySerial(System.getenv("UDID"));
+            if(!device.getName().isEmpty()){
+                deviceSize = 1;
+            }
+            return device;
+        }
     }
 
     public boolean checkIfDevicesAreConnected() {
@@ -45,22 +53,21 @@ public class AndroidDeviceScreen implements DeviceInterface {
         return false;
     }
 
-    public String getDeviceName(){
+    public String getDeviceName() {
         return device.getName().toString();
     }
 
 
-    public void captureScreenShot(String arg,String imagePath) {
-            util.createDirectory(arg);
-            File f = new File(imagePath);
-            if(f.exists()){
-                System.out.println("BaseLine Image already Exists");
-            }
-            else{
-                BufferedImage image = device.takeScreenshot();
-                ImageUtils.writeToFile(image, imagePath);
-            }
+    public void captureScreenShot(String arg, String imagePath) {
+        util.createDirectory(arg);
+        File f = new File(imagePath);
+        if (f.exists()) {
+            System.out.println("BaseLine Image already Exists");
+        } else {
+            BufferedImage image = device.takeScreenshot();
+            ImageUtils.writeToFile(image, imagePath);
         }
+    }
 
     public void captureScreenShot(WebDriver driver, String imagePath, String imageName) {
 

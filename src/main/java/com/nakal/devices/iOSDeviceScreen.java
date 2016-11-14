@@ -39,7 +39,6 @@ public class iOSDeviceScreen implements DeviceInterface {
 
     public void captureScreenShot(String screenShotPath,String imagePath){
         utils.createDirectory(screenShotPath);
-        //imagePath = System.getProperty("user.dir")+"/"+System.getenv("PLATFORM")+"/baseline_images/"+screenShotPath+".png";
         File f = new File(imagePath);
         if(f.exists()){
             System.out.println("BaseLine Image already Exists");
