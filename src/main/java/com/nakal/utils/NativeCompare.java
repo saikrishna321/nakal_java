@@ -10,9 +10,9 @@ public class NativeCompare {
 
     public void setExpectedImage(String baseLineImageName) {
         this.expectedImage =
-            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
-                .getenv("APP") + "/baseline_images/" + baseLineImageName + "/" + baseLineImageName
-                + ".png";
+                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")
+                        + "/baseline_images/" + baseLineImageName + "/" + baseLineImageName
+                        + ".png";
         ;
     }
 
@@ -22,9 +22,9 @@ public class NativeCompare {
 
     public void setMaskedRegionExpectedImage(String baseLineImageName) {
         this.maskedRegionExpectedImage =
-            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
-                .getenv("APP") + "/baseline_images/" + baseLineImageName + "/" + "maskedregion_"
-                + baseLineImageName + ".png";
+                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")
+                        + "/baseline_images/" + baseLineImageName + "/" + "maskedregion_"
+                        + baseLineImageName + ".png";
         ;
     }
 
@@ -34,8 +34,8 @@ public class NativeCompare {
 
     public void setMaskImage() {
         this.maskImage =
-            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/mask_images/"
-                + System.getenv("MASKIMAGE") + ".png";
+                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/mask_images/"
+                        + System.getenv("MASKIMAGE") + ".png";
     }
 
     public String getMaskedExpectedImage() {
@@ -44,9 +44,9 @@ public class NativeCompare {
 
     public void setMaskedExpectedImage(String baseLineImageName) {
         this.maskedExpectedImage =
-            System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
-                .getenv("APP") + "/baseline_images/" + baseLineImageName + "/" + "masked_"
-                + baseLineImageName + ".png";
+                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")
+                        + "/baseline_images/" + baseLineImageName + "/" + "masked_"
+                        + baseLineImageName + ".png";
         ;
     }
 
@@ -63,9 +63,9 @@ public class NativeCompare {
 
     public void setMaskedActualImage(String baseLineImageName) {
         this.maskedActualImage =
-            System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM") + "/" + System
-                .getenv("APP") + "/actual_images/" + baseLineImageName + "/" + "masked_"
-                + baseLineImageName + ".png";
+                System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM")
+                        + "/actual_images/" + baseLineImageName + "/" + "masked_"
+                        + baseLineImageName + ".png";
         ;
     }
 
@@ -77,9 +77,9 @@ public class NativeCompare {
 
     public void setMergedDiffImage(String baseLineImageName) {
         this.mergedDiffImage =
-            System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM") + "/" + System
-                .getenv("APP") + "/actual_images/" + baseLineImageName + "/" + "difference_"
-                + baseLineImageName + ".png";
+                System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM")
+                        + "/actual_images/" + baseLineImageName + "/" + "difference_"
+                        + baseLineImageName + ".png";
         ;
     }
 
@@ -91,9 +91,9 @@ public class NativeCompare {
 
     public void setDiffImage(String baseLineImageName) {
         this.diffImage =
-            System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM") + "/" + System
-                .getenv("APP") + "/actual_images/" + baseLineImageName + "/" + "diff_"
-                + baseLineImageName + ".png";
+                System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM")
+                        + "/actual_images/" + baseLineImageName + "/" + "diff_"
+                        + baseLineImageName + ".png";
         ;
     }
 
@@ -105,9 +105,9 @@ public class NativeCompare {
 
     public void setActualImage(String baseLineImageName) {
         this.actualImage =
-            System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM") + "/" + System
-                .getenv("APP") + "/actual_images/" + baseLineImageName + "/" + "actual_"
-                + baseLineImageName + ".png";
+                System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM") +
+                        "/actual_images/" + baseLineImageName + "/" + "actual_"
+                        + baseLineImageName + ".png";
         ;
     }
 
@@ -117,12 +117,11 @@ public class NativeCompare {
 
     public void setActualMaskedRegionImage(String baseLineImageName) {
         this.actualMaskedRegionImage =
-            System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM") + "/" + System
-                .getenv("APP") + "/actual_images/" + baseLineImageName + "/" + "actualmaskedregion_"
-                + baseLineImageName + ".png";
+                System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM")
+                        + "/actual_images/" + baseLineImageName + "/" + "actualmaskedregion_"
+                        + baseLineImageName + ".png";
         ;
     }
-
 
 
 }

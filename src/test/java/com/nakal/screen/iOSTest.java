@@ -3,6 +3,7 @@ package com.nakal.screen;
 import com.nakal.ScreenExecutor.NakalExecutor;
 import org.im4java.core.IM4JavaException;
 import org.junit.Test;
+import org.openqa.selenium.remote.CapabilityType;
 
 import java.io.IOException;
 
@@ -19,3 +20,9 @@ public class iOSTest {
         nakalExecutor.nakalExecutorNativeCompare("ActivityScreen");
     }
 }
+
+
+
+
+
+

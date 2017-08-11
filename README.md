@@ -59,18 +59,9 @@ MASKIMAGE value in the env should be the same fileName which is stored under the
 
 #Running the tests
 
-<h1>Comparing images on native applications</h1>
+PLATFORM="android" NAKAL_MODE="build" MASKIMAGE="nexus5" mvn clean -Dtest=AndroidTest test (captures a baseline image)
 
-PLATFORM="android" APP="native" NAKAL_MODE="build" MASKIMAGE="nexus5" mvn clean -Dtest=AndroidTest test (captures a baseline image)
-
-PLATFORM="android" APP="native" NAKAL_MODE="compare" MASKIMAGE="nexus5" mvn clean -Dtest=AndroidTest test ( compares expected and actual image)
-
-<h1>Comparing images on web application</h1>
-For Appium,Selendroid(PLATFORM=android/ios) and WebDriver(PLATFORM=Desktop)
-
-PLATFORM="Desktop" APP="web" NAKAL_MODE="build" mvn clean -Dtest=WebDriverTest test (captures a baseline image)
-
-PLATFORM="Desktop" APP="web" NAKAL_MODE="compare" mvn clean -Dtest=WebDriverTest test ( compares expected and actual image)
+PLATFORM="android" NAKAL_MODE="compare" MASKIMAGE="nexus5" mvn clean -Dtest=AndroidTest test ( compares expected and actual image)
 
 ## Ignore certain regions of the image
 

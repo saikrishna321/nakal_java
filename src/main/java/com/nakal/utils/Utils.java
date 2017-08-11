@@ -15,11 +15,11 @@ public class Utils {
     public void createDirectory(String fileName) {
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
             deleteDirectory(
-                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
-                    .getenv("APP") + "/baseline_images/" + fileName);
+                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")
+                        + "/baseline_images/" + fileName);
             file = new File(
-                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM") + "/" + System
-                    .getenv("APP") + "/baseline_images/" + fileName);
+                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")
+                        + "/baseline_images/" + fileName);
             if (!file.exists()) {
                 if (file.mkdirs()) {
                     System.out.println("BaseLine Image Directory is created!");
@@ -32,8 +32,8 @@ public class Utils {
 
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
             file = new File(
-                System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM") + "/" + System
-                    .getenv("APP") + "/actual_images/" + fileName);
+                System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM")
+                        + "/actual_images/" + fileName);
             if (!file.exists()) {
                 if (file.mkdirs()) {
                     System.out.println("Actual Image Directory is created!");
