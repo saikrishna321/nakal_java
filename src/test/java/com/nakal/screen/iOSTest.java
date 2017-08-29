@@ -2,6 +2,7 @@ package com.nakal.screen;
 
 import com.nakal.ScreenExecutor.NakalExecutor;
 import org.im4java.core.IM4JavaException;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.remote.CapabilityType;
 
@@ -17,7 +18,13 @@ public class iOSTest {
     @Test
     public void captureScreenShotFromDevice()
         throws InterruptedException, IOException, IM4JavaException {
-        nakalExecutor.nakalExecutorNativeCompare("ActivityScreen");
+        nakalExecutor.nakalExecutorNativeCompare("Login");
+    }
+
+    @Test
+    public void compareImagesWithPixelDifference()
+            throws InterruptedException, IOException, IM4JavaException {
+        Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("ActivityScreen",3));
     }
 }
 
