@@ -1,4 +1,10 @@
-# Nakal_Java
+<h1 align="center">
+	<br>
+	<img width="600" src="https://github.com/saikrishna321/nakal_java/blob/master/Nakal.png" alt="nakal">
+	<br>
+	<br>
+	<br>
+</h1>
 
 Automated visual testing of Android/iOS/Web applications.
 
