@@ -1,6 +1,5 @@
 package com.nakal.devices;
 
-import org.openqa.selenium.WebDriver;
 
 /**
  * Created by saikrisv on 22/02/16.
@@ -8,6 +7,4 @@ import org.openqa.selenium.WebDriver;
 public interface DeviceInterface {
 
     public void captureScreenShot(String filePath,String imagePath);
-
-    public void captureScreenShot(WebDriver driver, String imagePath,String imageName);
 }
