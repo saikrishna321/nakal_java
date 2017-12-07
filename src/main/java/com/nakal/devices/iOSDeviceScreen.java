@@ -3,7 +3,6 @@ package com.nakal.devices;
 import com.nakal.utils.CommandPrompt;
 import com.nakal.utils.Utils;
 import com.thoughtworks.device.SimulatorManager;
-import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,13 +68,4 @@ public class iOSDeviceScreen implements DeviceInterface {
         }
 
     }
-
-    public void captureScreenShot(WebDriver driver, String imagePath) {
-
-    }
-
-    public void captureScreenShot(WebDriver driver, String filePath, String imagePath) {
-
-    }
-
 }

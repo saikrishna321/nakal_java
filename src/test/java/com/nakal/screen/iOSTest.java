@@ -4,7 +4,6 @@ import com.nakal.ScreenExecutor.NakalExecutor;
 import org.im4java.core.IM4JavaException;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.remote.CapabilityType;
 
 import java.io.IOException;
 

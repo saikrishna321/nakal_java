@@ -1,11 +1,9 @@
 package com.nakal.ScreenExecutor;
 
 import com.nakal.capturescreen.ScreenShooter;
-import com.nakal.devices.WebScreen;
 import com.nakal.imageutil.ImageUtil;
 import com.nakal.utils.NativeCompare;
 import org.im4java.core.IM4JavaException;
-import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +14,6 @@ import java.io.IOException;
 public class NakalExecutor extends ScreenShooter {
 
     ImageUtil imageUtil = new ImageUtil();
-    WebScreen webScreen = new WebScreen();
     NativeCompare nativeCompare = new NativeCompare();
     public File file;
 
@@ -71,6 +68,7 @@ public class NakalExecutor extends ScreenShooter {
                 imageUtil.maskImage(actualImage, nativeCompare.getMaskImage(), maskedActualImage);
             }
         } else {
+            if(System.getenv("MASKIMAGE")!= null)
             imageUtil.maskImage(actualImage, nativeCompare.getMaskImage(), maskedActualImage);
         }
     }
