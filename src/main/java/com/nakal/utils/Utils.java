@@ -15,10 +15,10 @@ public class Utils {
     public void createDirectory(String fileName) {
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
             deleteDirectory(
-                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")
+                System.getProperty("user.dir") + "/" + new ScreenPaths().customPath
                         + "/baseline_images/" + fileName);
             file = new File(
-                System.getProperty("user.dir") + "/" + System.getenv("PLATFORM")
+                System.getProperty("user.dir") + "/" + new ScreenPaths().customPath
                         + "/baseline_images/" + fileName);
             if (!file.exists()) {
                 if (file.mkdirs()) {
@@ -32,7 +32,7 @@ public class Utils {
 
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
             file = new File(
-                System.getProperty("user.dir") + "/target/" + System.getenv("PLATFORM")
+                System.getProperty("user.dir") + "/target/" + System.getenv("Platform")
                         + "/actual_images/" + fileName);
             if (!file.exists()) {
                 if (file.mkdirs()) {

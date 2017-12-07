@@ -11,14 +11,14 @@ public class ViewFactory{
 		if (platform == null) {
 			return null;
 		}
-		if (platform.equalsIgnoreCase("android")) {
+		if (platform.equalsIgnoreCase("android") || platform.equalsIgnoreCase("chrome")) {
 			if (androidFlow == null) {
 				return androidFlow = new AndroidDeviceScreen();
 			}
 			return androidFlow;
 		}
 
-		if (platform.equalsIgnoreCase("ios")) {
+		if (platform.equalsIgnoreCase("ios") || platform.equalsIgnoreCase("safari")) {
 			if (iosFlow == null) {
 				return iosFlow = new iOSDeviceScreen();
 			}

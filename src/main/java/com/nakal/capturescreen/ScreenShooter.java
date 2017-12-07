@@ -10,7 +10,7 @@ public class ScreenShooter {
     private ViewFactory viewFactory = new ViewFactory();
 
     public void screenCapture(String fileName,String imagePath) {
-        DeviceInterface runnerInfo = viewFactory.getMobilePlatform(System.getenv("PLATFORM"));
+        DeviceInterface runnerInfo = viewFactory.getMobilePlatform(System.getenv("Platform"));
         runnerInfo.captureScreenShot(fileName,imagePath);
     }
 }
