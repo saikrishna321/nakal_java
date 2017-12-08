@@ -45,7 +45,8 @@ public class ScreenPaths {
 
     public void setMaskImage() {
         String platform = System.getenv("Platform");
-        if (platform.equalsIgnoreCase("chrome")) {
+        if (platform.equalsIgnoreCase("chrome")
+                || platform.equalsIgnoreCase("android") ) {
             platform = "android";
         } else {
             platform = "ios";
