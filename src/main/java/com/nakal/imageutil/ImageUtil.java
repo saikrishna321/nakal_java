@@ -29,7 +29,7 @@ public class ImageUtil {
     public boolean compareImages(String actualImage, String expectedImage, String diffImage)
         throws IOException, InterruptedException, IM4JavaException {
         IMOps cmpOp = new IMOperation();
-        cmpOp.metric("AE");
+        cmpOp.metric("RMSE");
         cmpOp.fuzz(10.00);
         cmpOp.addImage();
         cmpOp.addImage();
@@ -90,15 +90,15 @@ public class ImageUtil {
      * @throws IOException
      */
     public boolean compareImages(String expectedImage, String actualImage, String diffImage,
-        int value) throws IOException, IM4JavaException, InterruptedException {
+                                 Double value) throws IOException, IM4JavaException, InterruptedException {
         compareImages(actualImage, expectedImage, diffImage);
-        long totalImagePixel = getCompleteImagePixel(actualImage);
         if (arrayListErrorConsumer.getOutput().get(0).contains("+") == true) {
             return false;
         } else {
-            long totalPixelDifferne = Integer.parseInt(arrayListErrorConsumer.getOutput().get(0));
-            double c = ((double) totalPixelDifferne / totalImagePixel) * 100;
-            long finalPercentageDifference = Math.round(c);
+            String totalRMSEValue = arrayListErrorConsumer.getOutput().get(0).split(" ")
+                    [1].replace("(", "").replace(")", "");
+            float v = Float.parseFloat(totalRMSEValue) * 100;
+            long finalPercentageDifference = Math.round(v);
             System.out.println("Difference in the images is ::" + finalPercentageDifference + "%");
             try {
                 if (finalPercentageDifference <= value) {

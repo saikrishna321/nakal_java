@@ -94,7 +94,7 @@ public class NakalExecutor extends ScreenShooter {
         screenPaths.setMaskedActualImage(baseLineImageName);
     }
 
-    public boolean nakalExecutorNativeCompare(String baseLineImageName, int threshold)
+    public boolean nakalExecutorNativeCompare(String baseLineImageName, Double threshold)
         throws InterruptedException, IOException, IM4JavaException {
         initialize(baseLineImageName);
         if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {

@@ -46,22 +46,20 @@ public class AndroidTest {
     @Test
     public void verifyThresholdDifference() throws InterruptedException, IOException, IM4JavaException {
         imageUtil.compareImages(System.getProperty("user.dir") + "/testImages/googleActual.png",
-                System.getProperty("user.dir") + "/testImages/googleExpected.png", System.getProperty("user.dir") + "/testImages/percentageDiff.png",20);
+                System.getProperty("user.dir") + "/testImages/googleExpected.png",
+                System.getProperty("user.dir") + "/testImages/percentageDiff.png",0.2);
     }
 
 
     @Test
     public void compareImagesExecutor() throws InterruptedException, IOException, IM4JavaException {
-        nakalExecutor.nakalExecutorNativeCompare("Login");
-        System.out.println("Second Screen");
-        Thread.sleep(5000);
-        nakalExecutor.nakalExecutorNativeCompare("MyTickets");
+        Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("Login",0.5));
     }
 
     @Test
     public void compareImagesWithPixelDifference()
         throws InterruptedException, IOException, IM4JavaException {
-        Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("ActivityScreen",3));
+        Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("ActivityScreen",3.0));
     }
 
 }

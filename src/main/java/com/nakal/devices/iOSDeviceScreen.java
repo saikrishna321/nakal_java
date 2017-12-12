@@ -2,11 +2,14 @@ package com.nakal.devices;
 
 import com.nakal.utils.CommandPrompt;
 import com.nakal.utils.Utils;
+import com.thoughtworks.device.Device;
 import com.thoughtworks.device.SimulatorManager;
+import com.thoughtworks.iOS.IOSManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by saikrisv on 22/02/16.
@@ -17,27 +20,11 @@ public class iOSDeviceScreen implements DeviceInterface {
     SimulatorManager simulatorManager = new SimulatorManager();
     Utils utils = new Utils();
 
-    public void checkIfIOSDeviceIsConnected() throws IOException {
-       if(getIOSUDID().size() == 0){
-           System.out.println("No iOS devices Connected....Quiting System");
-       }
-    }
-
     public ArrayList<String> getIOSUDID() throws IOException {
-        try {
-            String getIOSDeviceID = commandPrompt.runCommand("idevice_id --list");
-            if(getIOSDeviceID.trim().equalsIgnoreCase("")) {
-                return deviceUDIDiOS;
-            }
-            String[] lines = getIOSDeviceID.trim().split("\n");
-            for (int i = 0; i < lines.length; i++) {
-                lines[i] = lines[i].replaceAll("\\s+", "");
-                deviceUDIDiOS.add(lines[i]);
-            }
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        List<Device> allAvailableDevices = new IOSManager().getAllAvailableDevices();
+        allAvailableDevices.forEach(iosudid -> {
+            deviceUDIDiOS.add(iosudid.getUdid());
+        });
         return deviceUDIDiOS;
     }
 
