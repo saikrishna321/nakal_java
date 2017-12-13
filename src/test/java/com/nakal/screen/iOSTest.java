@@ -23,7 +23,7 @@ public class iOSTest {
     @Test
     public void compareImagesWithPixelDifference()
             throws InterruptedException, IOException, IM4JavaException {
-        Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("ActivityScreen",3.0));
+        Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("ActivityScreen",3));
     }
 }
 
