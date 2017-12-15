@@ -30,7 +30,7 @@ public class ImageUtil {
         throws IOException, InterruptedException, IM4JavaException {
         IMOps cmpOp = new IMOperation();
         cmpOp.metric("AE");
-        cmpOp.fuzz(10.00);
+        cmpOp.fuzz(5.00,true);
         cmpOp.addImage();
         cmpOp.addImage();
         cmpOp.addImage();
@@ -70,7 +70,7 @@ public class ImageUtil {
         throws IOException, InterruptedException, IM4JavaException {
         IMOps cmpOp = new IMOperation();
         cmpOp.metric("AE");
-        cmpOp.fuzz(10.00);
+        cmpOp.fuzz(5.00,true);
         cmpOp.addImage();
         cmpOp.addImage();
         cmpOp.addImage();
