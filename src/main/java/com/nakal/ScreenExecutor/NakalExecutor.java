@@ -3,6 +3,7 @@ package com.nakal.ScreenExecutor;
 import com.nakal.capturescreen.ScreenShooter;
 import com.nakal.imageutil.ImageUtil;
 import com.nakal.utils.ScreenPaths;
+import com.nakal.utils.YamlReader;
 import org.im4java.core.IM4JavaException;
 
 import java.io.File;
@@ -59,7 +60,7 @@ public class NakalExecutor extends ScreenShooter {
         String actualImage, String actualMaskedRegionImage, String maskedActualImage)
         throws InterruptedException, IOException, IM4JavaException {
         screenCapture(fileName, actualImage);
-        if (imageUtil.checkIfYamlFileExists()) {
+        if (YamlReader.checkIfYamlFileExists()) {
             if (imageUtil.checkIfMaskRegionExists(baseLineImageName)) {
                 imageUtil.maskRegions(actualImage, actualMaskedRegionImage, baseLineImageName);
                 imageUtil.maskImage(actualMaskedRegionImage, screenPaths.getMaskImage(),

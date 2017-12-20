@@ -1,5 +1,6 @@
 package com.nakal.imageutil;
 
+import com.nakal.utils.YamlReader;
 import org.im4java.core.*;
 import org.im4java.process.ArrayListErrorConsumer;
 import org.yaml.snakeyaml.Yaml;
@@ -16,6 +17,10 @@ import java.util.Set;
  */
 public class ImageUtil {
     ArrayListErrorConsumer arrayListErrorConsumer = new ArrayListErrorConsumer();
+
+    public ImageUtil() {
+        YamlReader yamlReader= new YamlReader();
+    }
 
     /**
      * @param actualImage
@@ -179,7 +184,7 @@ public class ImageUtil {
 
     public String fetchValueFromYaml(String screenName) throws FileNotFoundException {
         Set mask_region =
-                ((LinkedHashMap) ((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE")))
+                ((LinkedHashMap) ((LinkedHashMap) YamlReader.getValue(System.getenv("MASKIMAGE")))
                         .get(screenName)).entrySet();
         String maskingRegions = "";
         for (Object regions : mask_region) {
@@ -192,10 +197,10 @@ public class ImageUtil {
 
     public boolean checkIfMaskRegionExists(String screenName) throws FileNotFoundException {
         getFuzzValue();
-        if ((getYamlParams().get(System.getenv("MASKIMAGE"))) != null) {
-            if (((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)
+        if ((YamlReader.getValue(System.getenv("MASKIMAGE"))) != null) {
+            if (((LinkedHashMap) YamlReader.getValue(System.getenv("MASKIMAGE"))).get(screenName)
                     != null
-                    || ((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)
+                    || ((LinkedHashMap) YamlReader.getValue(System.getenv("MASKIMAGE"))).get(screenName)
                     != null) {
                 return true;
             }
@@ -203,24 +208,10 @@ public class ImageUtil {
         return false;
     }
 
-    public Map<String, Object> getYamlParams() throws FileNotFoundException {
-        final String fileName = System.getProperty("user.dir") + "/nakal.yaml";
-        Yaml yaml = new Yaml();
-        InputStream yamlParams = new FileInputStream(new File(fileName));
-        Map<String, Object> result = (Map<String, Object>) yaml.load(yamlParams);
-        return result;
-    }
-
-    public boolean checkIfYamlFileExists() {
-        final String fileName = System.getProperty("user.dir") + "/nakal.yaml";
-        File file = new File(fileName);
-        return file.exists();
-    }
-
     private Double getFuzzValue() throws FileNotFoundException {
         Double fuzz;
-        if (getYamlParams().containsKey("fuzzPercentage")) {
-            fuzz = new Double(getYamlParams().get("fuzzpercentage").toString());
+        if (YamlReader.getAllResultsMap().containsKey("fuzzPercentage")) {
+            fuzz = new Double(YamlReader.getValue("fuzzPercentage").toString());
         } else {
             fuzz = 5.00;
         }
