@@ -220,7 +220,7 @@ public class ImageUtil {
     private Double getFuzzValue() throws FileNotFoundException {
         Double fuzz;
         if (getYamlParams().containsKey("fuzzPercentage")) {
-            fuzz = new Double(getYamlParams().get("fuzzpercentage").toString());
+            fuzz = new Double(getYamlParams().get("fuzzPercentage").toString());
         } else {
             fuzz = 5.00;
         }
