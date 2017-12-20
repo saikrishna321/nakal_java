@@ -27,11 +27,11 @@ public class ImageUtil {
      * @throws IM4JavaException
      */
     public boolean compareImages(String actualImage, String expectedImage, String diffImage)
-        throws IOException, InterruptedException, IM4JavaException {
+            throws IOException, InterruptedException, IM4JavaException {
 
         IMOps cmpOp = new IMOperation();
         cmpOp.metric("AE");
-        cmpOp.fuzz(new Double(getYamlParams().get("fuzzPercentage").toString()),true);
+        cmpOp.fuzz(getFuzzValue(), true);
         cmpOp.addImage();
         cmpOp.addImage();
         cmpOp.addImage();
@@ -47,8 +47,8 @@ public class ImageUtil {
 
             } catch (Throwable e1) {
                 System.out.println(
-                    "Total Pixel Difference of the Images:::" + arrayListErrorConsumer.getOutput()
-                        .get(0));
+                        "Total Pixel Difference of the Images:::" + arrayListErrorConsumer.getOutput()
+                                .get(0));
             }
             return false;
         }
@@ -68,10 +68,10 @@ public class ImageUtil {
      * @throws IM4JavaException
      */
     public boolean compareImages(String actualImage, String expectedImage)
-        throws IOException, InterruptedException, IM4JavaException {
+            throws IOException, InterruptedException, IM4JavaException {
         IMOps cmpOp = new IMOperation();
         cmpOp.metric("AE");
-        cmpOp.fuzz(new Double(getYamlParams().get("fuzzPercentage").toString()),true);
+        cmpOp.fuzz(getFuzzValue(), true);
         cmpOp.addImage();
         cmpOp.addImage();
         cmpOp.addImage();
@@ -90,17 +90,17 @@ public class ImageUtil {
      * @param value       set the ignore % of image pixels
      * @throws IOException
      */
-    public boolean compareImages(String expectedImage, String actualImage,String diffImage, int value)
+    public boolean compareImages(String expectedImage, String actualImage, String diffImage, int value)
             throws IOException, IM4JavaException, InterruptedException {
-        compareImages(actualImage, expectedImage,diffImage);
+        compareImages(actualImage, expectedImage, diffImage);
         long totalImagePixel = getCompleteImagePixel(actualImage);
-        if(arrayListErrorConsumer.getOutput().get(0).contains("+") == true){
+        if (arrayListErrorConsumer.getOutput().get(0).contains("+") == true) {
             return false;
-        }else{
+        } else {
             long totalPixelDifferne = Integer.parseInt(arrayListErrorConsumer.getOutput().get(0));
             double c = ((double) totalPixelDifferne / totalImagePixel) * 100;
             long finalPercentageDifference = Math.round(c);
-            System.out.println("Difference in the images is ::" + finalPercentageDifference +"%");
+            System.out.println("Difference in the images is ::" + finalPercentageDifference + "%");
             try {
                 if (finalPercentageDifference <= value) {
                     return true;
@@ -120,7 +120,7 @@ public class ImageUtil {
      * @throws IM4JavaException
      */
     public void maskImage(String actualImage, String maskImage, String maskedImage)
-        throws IOException, InterruptedException, IM4JavaException {
+            throws IOException, InterruptedException, IM4JavaException {
         IMOperation op = new IMOperation();
         op.addImage(actualImage);
         op.addImage(maskImage);
@@ -138,7 +138,7 @@ public class ImageUtil {
      * @throws IM4JavaException
      */
     public void mergeImagesHorizontally(String expected, String actual, String diffImage,
-        String mergedImage) throws InterruptedException, IOException, IM4JavaException {
+                                        String mergedImage) throws InterruptedException, IOException, IM4JavaException {
         ConvertCmd cmd1 = new ConvertCmd();
         IMOperation op1 = new IMOperation();
         op1.addImage(expected); // source file
@@ -160,14 +160,14 @@ public class ImageUtil {
     }
 
     public void maskRegions(String imageToMaskRegion, String imageMasked, String screenName)
-        throws InterruptedException, IOException, IM4JavaException {
+            throws InterruptedException, IOException, IM4JavaException {
         if (checkIfMaskRegionExists(screenName)) {
             drawRectangleToIgnore(imageToMaskRegion, imageMasked, screenName);
         }
     }
 
     private void drawRectangleToIgnore(String imageToMaskRegion, String imageMasked,
-        String screenName) throws IOException, InterruptedException, IM4JavaException {
+                                       String screenName) throws IOException, InterruptedException, IM4JavaException {
         ConvertCmd reg = new ConvertCmd();
         IMOperation rep_op = new IMOperation();
         rep_op.addImage(imageToMaskRegion);
@@ -179,23 +179,24 @@ public class ImageUtil {
 
     public String fetchValueFromYaml(String screenName) throws FileNotFoundException {
         Set mask_region =
-            ((LinkedHashMap) ((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE")))
-                .get(screenName)).entrySet();
+                ((LinkedHashMap) ((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE")))
+                        .get(screenName)).entrySet();
         String maskingRegions = "";
         for (Object regions : mask_region) {
             maskingRegions =
-                maskingRegions + " rectangle " + regions.toString().split("=")[1].toString()
-                    .replace("[", "").replace("]", "").trim();
+                    maskingRegions + " rectangle " + regions.toString().split("=")[1].toString()
+                            .replace("[", "").replace("]", "").trim();
         }
         return maskingRegions;
     }
 
     public boolean checkIfMaskRegionExists(String screenName) throws FileNotFoundException {
+        getFuzzValue();
         if ((getYamlParams().get(System.getenv("MASKIMAGE"))) != null) {
             if (((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)
-                != null
-                || ((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)
-                != null) {
+                    != null
+                    || ((LinkedHashMap) getYamlParams().get(System.getenv("MASKIMAGE"))).get(screenName)
+                    != null) {
                 return true;
             }
         }
@@ -216,4 +217,13 @@ public class ImageUtil {
         return file.exists();
     }
 
+    private Double getFuzzValue() throws FileNotFoundException {
+        Double fuzz;
+        if (getYamlParams().containsKey("fuzzPercentage")) {
+            fuzz = new Double(getYamlParams().get("fuzzpercentage").toString());
+        } else {
+            fuzz = 5.00;
+        }
+        return fuzz;
+    }
 }
