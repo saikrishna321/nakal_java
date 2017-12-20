@@ -28,9 +28,10 @@ public class ImageUtil {
      */
     public boolean compareImages(String actualImage, String expectedImage, String diffImage)
         throws IOException, InterruptedException, IM4JavaException {
+
         IMOps cmpOp = new IMOperation();
         cmpOp.metric("AE");
-        cmpOp.fuzz(5.00,true);
+        cmpOp.fuzz(new Double(getYamlParams().get("fuzzPercentage").toString()),true);
         cmpOp.addImage();
         cmpOp.addImage();
         cmpOp.addImage();
@@ -70,7 +71,7 @@ public class ImageUtil {
         throws IOException, InterruptedException, IM4JavaException {
         IMOps cmpOp = new IMOperation();
         cmpOp.metric("AE");
-        cmpOp.fuzz(5.00,true);
+        cmpOp.fuzz(new Double(getYamlParams().get("fuzzPercentage").toString()),true);
         cmpOp.addImage();
         cmpOp.addImage();
         cmpOp.addImage();
