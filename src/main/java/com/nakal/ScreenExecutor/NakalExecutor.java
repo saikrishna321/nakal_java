@@ -60,7 +60,7 @@ public class NakalExecutor extends ScreenShooter {
         String actualImage, String actualMaskedRegionImage, String maskedActualImage)
         throws InterruptedException, IOException, IM4JavaException {
         screenCapture(fileName, actualImage);
-        if (YamlReader.checkIfYamlFileExists()) {
+        if (YamlReader.getInstance().checkIfYamlFileExists()) {
             if (imageUtil.checkIfMaskRegionExists(baseLineImageName)) {
                 imageUtil.maskRegions(actualImage, actualMaskedRegionImage, baseLineImageName);
                 imageUtil.maskImage(actualMaskedRegionImage, screenPaths.getMaskImage(),

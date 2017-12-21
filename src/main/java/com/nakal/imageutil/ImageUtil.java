@@ -18,10 +18,6 @@ import java.util.Set;
 public class ImageUtil {
     ArrayListErrorConsumer arrayListErrorConsumer = new ArrayListErrorConsumer();
 
-    public ImageUtil() {
-        YamlReader yamlReader= new YamlReader();
-    }
-
     /**
      * @param actualImage
      * @param expectedImage
@@ -184,7 +180,7 @@ public class ImageUtil {
 
     public String fetchValueFromYaml(String screenName) throws FileNotFoundException {
         Set mask_region =
-                ((LinkedHashMap) ((LinkedHashMap) YamlReader.getValue(System.getenv("MASKIMAGE")))
+                ((LinkedHashMap) ((LinkedHashMap) YamlReader.getInstance().getValue(System.getenv("MASKIMAGE")))
                         .get(screenName)).entrySet();
         String maskingRegions = "";
         for (Object regions : mask_region) {
@@ -197,10 +193,10 @@ public class ImageUtil {
 
     public boolean checkIfMaskRegionExists(String screenName) throws FileNotFoundException {
         getFuzzValue();
-        if ((YamlReader.getValue(System.getenv("MASKIMAGE"))) != null) {
-            if (((LinkedHashMap) YamlReader.getValue(System.getenv("MASKIMAGE"))).get(screenName)
+        if ((YamlReader.getInstance().getValue(System.getenv("MASKIMAGE"))) != null) {
+            if (((LinkedHashMap) YamlReader.getInstance().getValue(System.getenv("MASKIMAGE"))).get(screenName)
                     != null
-                    || ((LinkedHashMap) YamlReader.getValue(System.getenv("MASKIMAGE"))).get(screenName)
+                    || ((LinkedHashMap) YamlReader.getInstance().getValue(System.getenv("MASKIMAGE"))).get(screenName)
                     != null) {
                 return true;
             }
@@ -210,8 +206,8 @@ public class ImageUtil {
 
     private Double getFuzzValue() throws FileNotFoundException {
         Double fuzz;
-        if (YamlReader.getAllResultsMap().containsKey("fuzzPercentage")) {
-            fuzz = new Double(YamlReader.getValue("fuzzPercentage").toString());
+        if (YamlReader.getInstance().getAllResultsMap().containsKey("fuzzPercentage")) {
+            fuzz = new Double(YamlReader.getInstance().getValue("fuzzPercentage").toString());
         } else {
             fuzz = 5.00;
         }

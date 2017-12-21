@@ -14,7 +14,9 @@ import java.util.Map;
 public class YamlReader {
     static Map<String, Object> result;
 
-    public YamlReader() {
+    private static YamlReader yamlReader;
+
+    private YamlReader() {
         final String fileName = getPath();
         Yaml yaml = new Yaml();
         InputStream yamlParams = null;
@@ -23,7 +25,14 @@ public class YamlReader {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        result= (Map<String, Object>) yaml.load(yamlParams);
+        result = (Map<String, Object>) yaml.load(yamlParams);
+    }
+
+    public static YamlReader getInstance() {
+        if (yamlReader == null) {
+            yamlReader = new YamlReader();
+        }
+        return yamlReader;
     }
 
     private static String getPath() {
