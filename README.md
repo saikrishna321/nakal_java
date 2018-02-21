@@ -33,10 +33,10 @@ Add this to your pom.xml
 
 ## Usage
 
-Environment Varaibles should hold  
-  * PLATFORM=ios/android
-  * MASKIMAGE=image which needs to be considered for masking
-  * NAKAL_MODE=build/compare
+Following mandatory properties need to be set before running test:  
+  * nakal.platform=ios/android
+  * nakal.maskimage=image which needs to be considered for masking
+  * nakal.mode=build/compare
 
 For Example:
 
@@ -65,9 +65,9 @@ MASKIMAGE value in the env should be the same fileName which is stored under the
 
 #Running the tests
 
-PLATFORM="android" NAKAL_MODE="build" MASKIMAGE="nexus5" mvn clean -Dtest=AndroidTest test (captures a baseline image)
+mvn clean -Dtest=AndroidTest test -Dnakal.platform=android -Dnakal.mode=build -Dnakal.maskimage=nexus5 (captures a baseline image)
 
-PLATFORM="android" NAKAL_MODE="compare" MASKIMAGE="nexus5" mvn clean -Dtest=AndroidTest test ( compares expected and actual image)
+mvn clean -Dtest=AndroidTest test -Dnakal.platform=android -Dnakal.mode=compare -Dnakal.maskimage=nexus5 ( compares expected and actual image)
 
 ## Ignore certain regions of the image
 
