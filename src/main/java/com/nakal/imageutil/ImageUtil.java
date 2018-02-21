@@ -196,7 +196,7 @@ public class ImageUtil {
         getFuzzValue();
 
         Object mask=YamlReader.getInstance().getValue(maskImage);
-        return mask!=null && ((LinkedHashMap)mask).get(screenName)!=null ? true : false;
+        return mask!=null && ((LinkedHashMap)mask).get(screenName)!=null;
     }
 
     private Double getFuzzValue() throws FileNotFoundException {
