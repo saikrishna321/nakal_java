@@ -1,10 +1,12 @@
 package com.nakal.devices;
 
+import static com.nakal.ScreenExecutor.NakalExecutor.isCompareMode;
 import com.nakal.utils.CommandPrompt;
 import com.nakal.utils.Utils;
 import com.thoughtworks.device.Device;
 import com.thoughtworks.device.SimulatorManager;
 import com.thoughtworks.iOS.IOSManager;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +40,7 @@ public class iOSDeviceScreen implements DeviceInterface {
                 if(getIOSUDID().size() != 0) {
                     commandPrompt.runCommand("idevicescreenshot " + imagePath);
                 } else if(simulatorManager.getAllBootedSimulators("iOS").size() != 0) {
-                    if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
+                    if (isCompareMode()) {
                         screenShotPath = "actual_" + screenShotPath;
                     }
                     imagePath = imagePath.replace(screenShotPath + ".png", "");

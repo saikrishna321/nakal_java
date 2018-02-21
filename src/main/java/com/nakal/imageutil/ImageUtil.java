@@ -1,5 +1,6 @@
 package com.nakal.imageutil;
 
+import static com.nakal.ScreenExecutor.Configuration.maskImage;
 import com.nakal.utils.YamlReader;
 import org.im4java.core.*;
 import org.im4java.process.ArrayListErrorConsumer;
@@ -180,7 +181,7 @@ public class ImageUtil {
 
     public String fetchValueFromYaml(String screenName) throws FileNotFoundException {
         Set mask_region =
-                ((LinkedHashMap) ((LinkedHashMap) YamlReader.getInstance().getValue(System.getenv("MASKIMAGE")))
+                ((LinkedHashMap) ((LinkedHashMap) YamlReader.getInstance().getValue(maskImage))
                         .get(screenName)).entrySet();
         String maskingRegions = "";
         for (Object regions : mask_region) {
@@ -193,15 +194,9 @@ public class ImageUtil {
 
     public boolean checkIfMaskRegionExists(String screenName) throws FileNotFoundException {
         getFuzzValue();
-        if ((YamlReader.getInstance().getValue(System.getenv("MASKIMAGE"))) != null) {
-            if (((LinkedHashMap) YamlReader.getInstance().getValue(System.getenv("MASKIMAGE"))).get(screenName)
-                    != null
-                    || ((LinkedHashMap) YamlReader.getInstance().getValue(System.getenv("MASKIMAGE"))).get(screenName)
-                    != null) {
-                return true;
-            }
-        }
-        return false;
+
+        Object mask=YamlReader.getInstance().getValue(maskImage);
+        return mask!=null && ((LinkedHashMap)mask).get(screenName)!=null ? true : false;
     }
 
     private Double getFuzzValue() throws FileNotFoundException {

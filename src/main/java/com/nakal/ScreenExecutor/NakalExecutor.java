@@ -6,6 +6,10 @@ import com.nakal.utils.ScreenPaths;
 import com.nakal.utils.YamlReader;
 import org.im4java.core.IM4JavaException;
 
+import static com.nakal.ScreenExecutor.Configuration.maskImage;
+import static com.nakal.ScreenExecutor.Configuration.nakalMode;
+import static com.nakal.ScreenExecutor.Configuration.platform;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -13,10 +17,21 @@ import java.io.IOException;
  * Created by saikrisv on 22/02/16.
  */
 public class NakalExecutor extends ScreenShooter {
+    public static final String BUILDMODE = "build";
+    public static final String COMPAREMODE = "compare";
+    public static final String ANDROID="android";
+    public static final String CHROME="chrome";
+    public static final String IOS="ios";
+    public static final String SAFARI="safari";
 
-    ImageUtil imageUtil = new ImageUtil();
-    ScreenPaths screenPaths = new ScreenPaths();
+    private ImageUtil imageUtil;
+    private ScreenPaths screenPaths;
     public File file;
+
+    public NakalExecutor(){
+        imageUtil = new ImageUtil();
+        screenPaths = new ScreenPaths();
+    }
 
     /**
      * @param baseLineImageName
@@ -30,9 +45,9 @@ public class NakalExecutor extends ScreenShooter {
     private boolean compareTwoImages(String baseLineImageName)
         throws InterruptedException, IOException, IM4JavaException {
         initialize(baseLineImageName);
-        if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
+        if (isBuildMode()) {
             return buildMode(baseLineImageName);
-        } else if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
+        } else if (isCompareMode()) {
             try {
                 screenCaptureAndMaskRegionsIfPresent(baseLineImageName, baseLineImageName,
                     screenPaths.getActualImage(), screenPaths.getActualMaskedRegionImage(),
@@ -69,7 +84,7 @@ public class NakalExecutor extends ScreenShooter {
                 imageUtil.maskImage(actualImage, screenPaths.getMaskImage(), maskedActualImage);
             }
         } else {
-            if(System.getenv("MASKIMAGE")!= null)
+            if(maskImage!= null)
             imageUtil.maskImage(actualImage, screenPaths.getMaskImage(), maskedActualImage);
         }
     }
@@ -98,9 +113,9 @@ public class NakalExecutor extends ScreenShooter {
     public boolean nakalExecutorNativeCompare(String baseLineImageName, int threshold)
         throws InterruptedException, IOException, IM4JavaException {
         initialize(baseLineImageName);
-        if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
+        if (isBuildMode()) {
             return buildMode(baseLineImageName);
-        } else if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
+        } else if (isCompareMode()) {
             try {
                 screenCaptureAndMaskRegionsIfPresent(baseLineImageName,
                      baseLineImageName, screenPaths.getActualImage(),
@@ -135,5 +150,27 @@ public class NakalExecutor extends ScreenShooter {
         file = new File(screenPaths.getDiffImage());
         file.delete();
     }
+
+    public static boolean isBuildMode() {
+        return BUILDMODE.equalsIgnoreCase(nakalMode);
+    }
+    public static boolean isCompareMode(){
+        return COMPAREMODE.equalsIgnoreCase(nakalMode);
+    }
+
+    public static boolean isAndroid(){
+        return ANDROID.equalsIgnoreCase(platform);
+    }
+    public static boolean isChrome(){
+        return CHROME.equalsIgnoreCase(platform);
+    }
+
+    public static boolean isiOS(){
+        return IOS.equalsIgnoreCase(platform);
+    }
+    public static boolean isSafari(){
+        return SAFARI.equalsIgnoreCase(platform);
+    }
+
 
 }

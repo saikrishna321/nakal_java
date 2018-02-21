@@ -1,18 +1,34 @@
 package com.nakal.utils;
 
+
+import com.nakal.ScreenExecutor.Configuration;
+import static com.nakal.ScreenExecutor.Configuration.baseDirectory;
+import static com.nakal.ScreenExecutor.Configuration.screenshotFolder;
+import static com.nakal.ScreenExecutor.Configuration.platform;
+
 /**
  * Created by saikrisv on 04/07/16.
  */
 public class ScreenPaths {
 
     String customPath;
+    String expectedImage;
+    String maskedRegionExpectedImage;
+    String maskImage;
+    String maskedExpectedImage;
+    String actualImage;
+    String actualMaskedRegionImage;
+    String maskedActualImage;
+    String mergedDiffImage;
+    String diffImage;
+
 
     public ScreenPaths() {
-           if (System.getenv("FOLDER_NAME")!=null) {
-               customPath = System.getenv("FOLDER_NAME")
-                       + "/" + System.getenv("Platform");
+           if (screenshotFolder!=null) {
+               customPath = System.getenv("nakal.screenshot.folder")
+                       + "/" + platform;
            } else {
-               customPath = System.getenv("Platform");
+               customPath = platform;
            }
     }
 
@@ -22,7 +38,7 @@ public class ScreenPaths {
 
     public void setExpectedImage(String baseLineImageName) {
         this.expectedImage =
-                System.getProperty("user.dir") + "/" + customPath
+                baseDirectory + "/" + customPath
                         + "/baseline_images/" + baseLineImageName + "/" + baseLineImageName
                         + ".png";
     }
@@ -33,7 +49,7 @@ public class ScreenPaths {
 
     public void setMaskedRegionExpectedImage(String baseLineImageName) {
         this.maskedRegionExpectedImage =
-                System.getProperty("user.dir") + "/" + customPath
+                baseDirectory + "/" + customPath
                         + "/baseline_images/" + baseLineImageName + "/" + "maskedregion_"
                         + baseLineImageName + ".png";
         ;
@@ -44,16 +60,10 @@ public class ScreenPaths {
     }
 
     public void setMaskImage() {
-        String platform = System.getenv("Platform");
-        if (platform.equalsIgnoreCase("chrome")
-                || platform.equalsIgnoreCase("android") ) {
-            platform = "android";
-        } else {
-            platform = "ios";
-        }
+
         this.maskImage =
-                System.getProperty("user.dir") + "/" + platform + "/mask_images/"
-                        + System.getenv("MASKIMAGE") + ".png";
+                baseDirectory + "/" + platform + "/mask_images/"
+                        + Configuration.maskImage + ".png";
     }
 
     public String getMaskedExpectedImage() {
@@ -62,18 +72,13 @@ public class ScreenPaths {
 
     public void setMaskedExpectedImage(String baseLineImageName) {
         this.maskedExpectedImage =
-                System.getProperty("user.dir") + "/" + customPath
+                baseDirectory + "/" + customPath
                         + "/baseline_images/" + baseLineImageName + "/" + "masked_"
                         + baseLineImageName + ".png";
         ;
     }
 
-    String expectedImage;
-    String maskedRegionExpectedImage;
-    String maskImage;
-    String maskedExpectedImage;
-    String actualImage;
-    String actualMaskedRegionImage;
+
 
     public String getMaskedActualImage() {
         return maskedActualImage;
@@ -81,13 +86,13 @@ public class ScreenPaths {
 
     public void setMaskedActualImage(String baseLineImageName) {
         this.maskedActualImage =
-                System.getProperty("user.dir") + "/target/" + customPath
+                baseDirectory + "/target/" + customPath
                         + "/actual_images/" + baseLineImageName + "/" + "masked_"
                         + baseLineImageName + ".png";
         ;
     }
 
-    String maskedActualImage;
+
 
     public String getMergedDiffImage() {
         return mergedDiffImage;
@@ -95,13 +100,13 @@ public class ScreenPaths {
 
     public void setMergedDiffImage(String baseLineImageName) {
         this.mergedDiffImage =
-                System.getProperty("user.dir") + "/target/" + customPath
+                baseDirectory + "/target/" + customPath
                         + "/actual_images/" + baseLineImageName + "/" + "difference_"
                         + baseLineImageName + ".png";
         ;
     }
 
-    String mergedDiffImage;
+
 
     public String getDiffImage() {
         return diffImage;
@@ -109,13 +114,13 @@ public class ScreenPaths {
 
     public void setDiffImage(String baseLineImageName) {
         this.diffImage =
-                System.getProperty("user.dir") + "/target/" + customPath
+                baseDirectory + "/target/" + customPath
                         + "/actual_images/" + baseLineImageName + "/" + "diff_"
                         + baseLineImageName + ".png";
         ;
     }
 
-    String diffImage;
+
 
     public String getActualImage() {
         return actualImage;
@@ -123,7 +128,7 @@ public class ScreenPaths {
 
     public void setActualImage(String baseLineImageName) {
         this.actualImage =
-                System.getProperty("user.dir") + "/target/" + customPath +
+                baseDirectory + "/target/" + customPath +
                         "/actual_images/" + baseLineImageName + "/" + "actual_"
                         + baseLineImageName + ".png";
         ;
@@ -135,7 +140,7 @@ public class ScreenPaths {
 
     public void setActualMaskedRegionImage(String baseLineImageName) {
         this.actualMaskedRegionImage =
-                System.getProperty("user.dir") + "/target/" + customPath
+                baseDirectory + "/target/" + customPath
                         + "/actual_images/" + baseLineImageName + "/" + "actualmaskedregion_"
                         + baseLineImageName + ".png";
         ;
