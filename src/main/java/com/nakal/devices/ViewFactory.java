@@ -1,4 +1,8 @@
 package com.nakal.devices;
+import static com.nakal.ScreenExecutor.NakalExecutor.isAndroid;
+import static com.nakal.ScreenExecutor.NakalExecutor.isChrome;
+import static com.nakal.ScreenExecutor.NakalExecutor.isiOS;
+import static com.nakal.ScreenExecutor.NakalExecutor.isSafari;
 
 
 public class ViewFactory{
@@ -11,14 +15,14 @@ public class ViewFactory{
 		if (platform == null) {
 			return null;
 		}
-		if (platform.equalsIgnoreCase("android") || platform.equalsIgnoreCase("chrome")) {
+		if (isAndroid() || isChrome()) {
 			if (androidFlow == null) {
 				return androidFlow = new AndroidDeviceScreen();
 			}
 			return androidFlow;
 		}
 
-		if (platform.equalsIgnoreCase("ios") || platform.equalsIgnoreCase("safari")) {
+		if (isiOS() || isSafari()) {
 			if (iosFlow == null) {
 				return iosFlow = new iOSDeviceScreen();
 			}

@@ -1,5 +1,6 @@
 package com.nakal.capturescreen;
 
+import static com.nakal.ScreenExecutor.Configuration.platform;
 import com.nakal.devices.DeviceInterface;
 import com.nakal.devices.ViewFactory;
 
@@ -10,7 +11,7 @@ public class ScreenShooter {
     private ViewFactory viewFactory = new ViewFactory();
 
     public void screenCapture(String fileName,String imagePath) {
-        DeviceInterface runnerInfo = viewFactory.getMobilePlatform(System.getenv("Platform"));
+        DeviceInterface runnerInfo = viewFactory.getMobilePlatform(platform);
         runnerInfo.captureScreenShot(fileName,imagePath);
     }
 }

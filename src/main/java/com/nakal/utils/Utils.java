@@ -4,6 +4,8 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import static com.nakal.ScreenExecutor.NakalExecutor.isBuildMode;
+import static com.nakal.ScreenExecutor.NakalExecutor.isCompareMode;
 
 /**
  * Created by saikrisv on 22/02/16.
@@ -14,7 +16,7 @@ public class Utils {
 
     public void createDirectory(String fileName) {
         String customPath = new ScreenPaths().customPath;
-        if (System.getenv("NAKAL_MODE").equalsIgnoreCase("build")) {
+        if (isBuildMode()) {
             deleteDirectory(
                 System.getProperty("user.dir") + "/" + customPath
                         + "/baseline_images/" + fileName);
@@ -31,7 +33,7 @@ public class Utils {
 
         }
 
-        if (System.getenv("NAKAL_MODE").equalsIgnoreCase("compare")) {
+        if (isCompareMode()) {
             file = new File(
                 System.getProperty("user.dir") + "/target/" + customPath
                         + "/actual_images/" + fileName);

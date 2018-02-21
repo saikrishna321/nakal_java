@@ -4,8 +4,8 @@ common: &common
 oneplus:
     Login: {region_1: *common, region_2:[180, 900, 900, 1008]}
 
-nexus6:
-    HomeScreen: {mask_region_1: [69, 441, 357, 553],mask_region_2: [50, 1600, 371, 1652]}
+nexus5:
+    Login: {mask_region_1: [69, 441, 357, 553],mask_region_2: [50, 1600, 371, 1652]}
     SearchScreen: {mask_region_1: [66,424,340,478],mask_region_2: [76,524,440,578]}
 
 fuzzPercentage: 5.00
