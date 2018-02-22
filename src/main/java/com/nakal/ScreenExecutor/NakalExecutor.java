@@ -41,9 +41,9 @@ public class NakalExecutor {
         if (isBuildMode()) {
             return buildMode(baseLineImageName);
         } else if (isCompareMode()) {
-            compareMode(baseLineImageName,null);
+            return compareMode(baseLineImageName,null);
         }
-        return Boolean.parseBoolean(null);
+        return false;
     }
     /**
      * @param baseLineImageName
@@ -56,7 +56,7 @@ public class NakalExecutor {
         if (isBuildMode()) {
             return buildMode(baseLineImageName);
         } else if (isCompareMode()) {
-            compareMode(baseLineImageName, threshold);
+            return compareMode(baseLineImageName, threshold);
         }
         return false;
     }
