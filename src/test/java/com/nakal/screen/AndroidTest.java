@@ -50,7 +50,6 @@ public class AndroidTest {
                 System.getProperty("user.dir") + "/testImages/percentageDiff.png",2);
     }
 
-
     @Test
     public void compareImagesExecutor() throws InterruptedException, IOException, IM4JavaException {
         Assert.assertTrue(nakalExecutor.nakalExecutorNativeCompare("Login",5));

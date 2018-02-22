@@ -1,5 +1,6 @@
 package com.nakal.utils;
 
+import static com.nakal.ScreenExecutor.Configuration.baseDirectory;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -15,13 +16,14 @@ public class Utils {
     public File file;
 
     public void createDirectory(String fileName) {
-        String customPath = new ScreenPaths().customPath;
+        String customPath= new ScreenPaths(fileName).getCustomPath();
+
         if (isBuildMode()) {
             deleteDirectory(
-                System.getProperty("user.dir") + "/" + customPath
+                baseDirectory + File.separator + customPath
                         + "/baseline_images/" + fileName);
             file = new File(
-                System.getProperty("user.dir") + "/" + customPath
+                baseDirectory + File.separator + customPath
                         + "/baseline_images/" + fileName);
             if (!file.exists()) {
                 if (file.mkdirs()) {
@@ -35,7 +37,7 @@ public class Utils {
 
         if (isCompareMode()) {
             file = new File(
-                System.getProperty("user.dir") + "/target/" + customPath
+                baseDirectory + "/target/" + customPath
                         + "/actual_images/" + fileName);
             if (!file.exists()) {
                 if (file.mkdirs()) {

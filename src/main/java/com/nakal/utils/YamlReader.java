@@ -1,5 +1,6 @@
 package com.nakal.utils;
 
+import static com.nakal.ScreenExecutor.Configuration.baseDirectory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -36,7 +37,7 @@ public class YamlReader {
     }
 
     private static String getPath() {
-        return System.getProperty("user.dir") + "/nakal.yaml";
+        return baseDirectory + "/nakal.yaml";
     }
 
     public static Object getValue(String key) {
