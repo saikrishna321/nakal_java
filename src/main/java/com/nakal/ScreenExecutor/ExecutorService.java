@@ -75,7 +75,7 @@ public class ExecutorService {
         new ScreenShooter().screenCapture(fileName,imagepath);
     }
     private void applyMaskImage(String maskedRegionImage) throws InterruptedException, IOException, IM4JavaException {
-        imageUtil.maskImage1(maskedRegionImage, screenPaths.getMaskImage());
+        imageUtil.maskImage(maskedRegionImage, screenPaths.getMaskImage());
     }
     private void mergerDiffHorizontal(String expectedImage,String actualImage,String diffImage)
             throws InterruptedException, IOException, IM4JavaException {
