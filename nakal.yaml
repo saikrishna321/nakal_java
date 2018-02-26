@@ -8,4 +8,9 @@ nexus5:
     Login: {mask_region_1: [69, 441, 357, 553],mask_region_2: [50, 1600, 371, 1652]}
     SearchScreen: {mask_region_1: [66,424,340,478],mask_region_2: [76,524,440,578]}
 
+iphone6:
+    Login: {mask_region_1: [69, 441, 357, 553],mask_region_2: [50, 1600, 371, 1652]}
+    SearchScreen: {mask_region_1: [66,424,340,478],mask_region_2: [76,524,440,578]}
+
 fuzzPercentage: 5.00
+fullScreen: false

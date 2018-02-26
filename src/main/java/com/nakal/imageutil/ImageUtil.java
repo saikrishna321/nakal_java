@@ -1,6 +1,9 @@
 package com.nakal.imageutil;
 
 import static com.nakal.ScreenExecutor.Configuration.maskImage;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.hasAttributeInYaml;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.isYamlPresent;
+
 import com.nakal.utils.YamlReader;
 import org.im4java.core.*;
 import org.im4java.process.ArrayListErrorConsumer;
@@ -134,6 +137,20 @@ public class ImageUtil {
         convert.run(op);
     }
 
+    public void maskImage1(String actualImage, String maskImage)
+            throws IOException, InterruptedException, IM4JavaException {
+        String maskedImage=actualImage;
+        IMOperation op = new IMOperation();
+        op.addImage(actualImage);
+        op.addImage(maskImage);
+        op.alpha("on");
+        op.compose("DstOut");
+        op.composite();
+        op.addImage(maskedImage);
+        ConvertCmd convert = new ConvertCmd();
+        convert.run(op);
+    }
+
     /**
      * @throws InterruptedException
      * @throws IOException
@@ -161,51 +178,27 @@ public class ImageUtil {
         return h * w;
     }
 
-    public void maskRegions(String imageToMaskRegion, String imageMasked, String screenName)
+    public void maskRegions(String imageToMaskRegion, String screenName)
             throws InterruptedException, IOException, IM4JavaException {
-        if (checkIfMaskRegionExists(screenName)) {
-            drawRectangleToIgnore(imageToMaskRegion, imageMasked, screenName);
-        }
+        drawRectangleToIgnore(imageToMaskRegion, screenName);
     }
 
-    private void drawRectangleToIgnore(String imageToMaskRegion, String imageMasked,
+    private void drawRectangleToIgnore(String imageToMaskRegion,
                                        String screenName) throws IOException, InterruptedException, IM4JavaException {
         ConvertCmd reg = new ConvertCmd();
         IMOperation rep_op = new IMOperation();
         rep_op.addImage(imageToMaskRegion);
         rep_op.fill("Blue");
-        rep_op.draw(fetchValueFromYaml(screenName));
-        rep_op.addImage(imageMasked);
+        rep_op.draw(YamlReader.getInstance().fetchValueFromYaml(screenName));
+        rep_op.addImage(imageToMaskRegion);
         reg.run(rep_op);
     }
-
-    public String fetchValueFromYaml(String screenName) throws FileNotFoundException {
-        Set mask_region =
-                ((LinkedHashMap) ((LinkedHashMap) YamlReader.getInstance().getValue(maskImage))
-                        .get(screenName)).entrySet();
-        String maskingRegions = "";
-        for (Object regions : mask_region) {
-            maskingRegions =
-                    maskingRegions + " rectangle " + regions.toString().split("=")[1].toString()
-                            .replace("[", "").replace("]", "").trim();
-        }
-        return maskingRegions;
-    }
-
-    public boolean checkIfMaskRegionExists(String screenName) throws FileNotFoundException {
-        getFuzzValue();
-
-        Object mask=YamlReader.getInstance().getValue(maskImage);
-        return mask!=null && ((LinkedHashMap)mask).get(screenName)!=null;
-    }
-
-    private Double getFuzzValue() throws FileNotFoundException {
-        Double fuzz;
-        if (YamlReader.getInstance().getAllResultsMap().containsKey("fuzzPercentage")) {
-            fuzz = new Double(YamlReader.getInstance().getValue("fuzzPercentage").toString());
-        } else {
-            fuzz = 5.00;
+    public static Double getFuzzValue() throws FileNotFoundException {
+        Double fuzz=5.0;
+        if(isYamlPresent() && hasAttributeInYaml("fuzzPercentage")) {
+                fuzz = new Double(YamlReader.getInstance().getValue("fuzzPercentage").toString());
         }
         return fuzz;
     }
+
 }

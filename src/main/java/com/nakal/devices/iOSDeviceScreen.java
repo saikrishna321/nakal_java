@@ -1,6 +1,6 @@
 package com.nakal.devices;
 
-import static com.nakal.ScreenExecutor.NakalExecutor.isCompareMode;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.isCompareMode;
 import com.nakal.utils.CommandPrompt;
 import com.nakal.utils.Utils;
 import com.thoughtworks.device.Device;
@@ -23,7 +23,7 @@ public class iOSDeviceScreen implements DeviceInterface {
     Utils utils = new Utils();
 
     public ArrayList<String> getIOSUDID() throws IOException {
-        List<Device> allAvailableDevices = new IOSManager().getAllAvailableDevices();
+        List<Device> allAvailableDevices = new IOSManager().getDevices();
         allAvailableDevices.forEach(iosudid -> {
             deviceUDIDiOS.add(iosudid.getUdid());
         });
@@ -40,9 +40,6 @@ public class iOSDeviceScreen implements DeviceInterface {
                 if(getIOSUDID().size() != 0) {
                     commandPrompt.runCommand("idevicescreenshot " + imagePath);
                 } else if(simulatorManager.getAllBootedSimulators("iOS").size() != 0) {
-                    if (isCompareMode()) {
-                        screenShotPath = "actual_" + screenShotPath;
-                    }
                     imagePath = imagePath.replace(screenShotPath + ".png", "");
                     String UDID = simulatorManager.getAllBootedSimulators("iOS").get(0).getUdid();
                     simulatorManager.captureScreenshot(UDID, screenShotPath, imagePath, "png");

@@ -16,12 +16,9 @@ public class ScreenPaths {
 
     private String customPath;
     private String expectedImage;
-    private String maskedRegionExpectedImage;
     private String maskImage;
-    private String maskedExpectedImage;
     private String actualImage;
-    private String maskedRegionActualImage;
-    private String maskedActualImage;
+
     private String mergedDiffImage;
     private String diffImage;
 
@@ -40,12 +37,8 @@ public class ScreenPaths {
     private void init(String baseLineImageName){
 
         setActualImage(baseLineImageName);
-        setMaskedRegionActualImage(baseLineImageName);
         setExpectedImage(baseLineImageName);
-        setMaskedActualImage(baseLineImageName);
-        setMaskedExpectedImage(baseLineImageName);
         setDiffImage(baseLineImageName);
-        setMaskedRegionExpectedImage(baseLineImageName);
         setMaskImage();
         setMergedDiffImage(baseLineImageName);
     }
@@ -56,28 +49,10 @@ public class ScreenPaths {
                         + ".png";
     }
 
-    private void setMaskedRegionExpectedImage(String baseLineImageName) {
-        this.maskedRegionExpectedImage =
-                getBasePathForBaseLine(baseLineImageName)+ "maskedregion_"
-                        + baseLineImageName + ".png";
-    }
-
     private void setMaskImage() {
         this.maskImage =
                 baseDirectory + File.separator + platform + "/mask_images/"
                         + Configuration.maskImage + ".png";
-    }
-
-    private void setMaskedExpectedImage(String baseLineImageName) {
-        this.maskedExpectedImage =
-                getBasePathForBaseLine(baseLineImageName)+ "masked_"
-                        + baseLineImageName + ".png";
-    }
-
-    private void setMaskedActualImage(String baseLineImageName) {
-        this.maskedActualImage =
-                getBasePathForTargetActualImage(baseLineImageName)+ "masked_"
-                        + baseLineImageName + ".png";
     }
 
     private void setMergedDiffImage(String baseLineImageName) {
@@ -96,15 +71,10 @@ public class ScreenPaths {
 
     private void setActualImage(String baseLineImageName) {
         this.actualImage =
-                getBasePathForTargetActualImage(baseLineImageName)+ "actual_"
+                getBasePathForTargetActualImage(baseLineImageName)
                         + baseLineImageName + ".png";
     }
 
-    private void setMaskedRegionActualImage(String baseLineImageName) {
-        this.maskedRegionActualImage =
-                getBasePathForTargetActualImage(baseLineImageName) + "actualmaskedregion_"
-                        + baseLineImageName + ".png";
-    }
 
     private String getBasePathForTargetActualImage(String baseLineImageName){
         return baseDirectory + "/target/" + customPath
@@ -124,28 +94,12 @@ public class ScreenPaths {
         return expectedImage;
     }
 
-    public String getMaskedRegionExpectedImage() {
-        return maskedRegionExpectedImage;
-    }
-
     public String getMaskImage() {
         return maskImage;
     }
 
-    public String getMaskedExpectedImage() {
-        return maskedExpectedImage;
-    }
-
     public String getActualImage() {
         return actualImage;
-    }
-
-    public String getMaskedRegionActualImage() {
-        return maskedRegionActualImage;
-    }
-
-    public String getMaskedActualImage() {
-        return maskedActualImage;
     }
 
     public String getMergedDiffImage() {

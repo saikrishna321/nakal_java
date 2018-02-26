@@ -5,8 +5,8 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import static com.nakal.ScreenExecutor.NakalExecutor.isBuildMode;
-import static com.nakal.ScreenExecutor.NakalExecutor.isCompareMode;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.isBuildMode;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.isCompareMode;
 
 /**
  * Created by saikrisv on 22/02/16.
@@ -36,6 +36,9 @@ public class Utils {
         }
 
         if (isCompareMode()) {
+            deleteDirectory(
+                    baseDirectory + "/target/" + customPath
+                            + "/actual_images/" + fileName);
             file = new File(
                 baseDirectory + "/target/" + customPath
                         + "/actual_images/" + fileName);
