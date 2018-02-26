@@ -15,40 +15,16 @@ public class Utils {
 
     public File file;
 
-    public void createDirectory(String fileName) {
-        String customPath= new ScreenPaths(fileName).getCustomPath();
+    public void createDirectory(String directoryPath) {
 
-        if (isBuildMode()) {
-            deleteDirectory(
-                baseDirectory + File.separator + customPath
-                        + "/baseline_images/" + fileName);
-            file = new File(
-                baseDirectory + File.separator + customPath
-                        + "/baseline_images/" + fileName);
-            if (!file.exists()) {
-                if (file.mkdirs()) {
+        deleteDirectory(directoryPath);
+        File file= new File(directoryPath);
+        if(!file.exists()){
+            if (file.mkdirs()) {
                     System.out.println("BaseLine Image Directory is created!");
                 } else {
                     System.out.println("Failed to create BaseLine image directory!");
                 }
-            }
-
-        }
-
-        if (isCompareMode()) {
-            deleteDirectory(
-                    baseDirectory + "/target/" + customPath
-                            + "/actual_images/" + fileName);
-            file = new File(
-                baseDirectory + "/target/" + customPath
-                        + "/actual_images/" + fileName);
-            if (!file.exists()) {
-                if (file.mkdirs()) {
-                    System.out.println("Actual Image Directory is created!");
-                } else {
-                    System.out.println("Failed to create BaseLine image directory!");
-                }
-            }
         }
     }
 
@@ -69,5 +45,9 @@ public class Utils {
             file.delete();
         }
 
+    }
+
+    public String getParentDirectoryFromFile(File file) {
+        return file.getParent();
     }
 }

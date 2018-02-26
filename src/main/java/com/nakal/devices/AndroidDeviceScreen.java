@@ -58,11 +58,15 @@ public class AndroidDeviceScreen implements DeviceInterface {
 
 
     public void captureScreenShot(String arg, String imagePath) {
-        util.createDirectory(arg);
-        File f = new File(imagePath);
-        if (f.exists()) {
+        //util.createDirectory(arg);
+        String directoryPath=null;
+        File file = new File(imagePath);
+        if (file.exists()) {
             System.out.println("BaseLine Image already Exists");
         } else {
+            if(!file.isDirectory())
+                directoryPath=util.getParentDirectoryFromFile(file);
+                util.createDirectory(directoryPath);
             BufferedImage image = device.takeScreenshot();
             ImageUtils.writeToFile(image, imagePath);
         }
