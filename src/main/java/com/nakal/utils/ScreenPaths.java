@@ -25,7 +25,7 @@ public class ScreenPaths {
 
     public ScreenPaths(String baseLineImageName) {
            if (screenshotFolder!=null) {
-               customPath = System.getenv("nakal.screenshot.folder")
+               customPath = screenshotFolder
                        + File.separator + platform;
            } else {
                customPath = platform;
