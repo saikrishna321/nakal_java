@@ -57,7 +57,7 @@ public class AndroidDeviceScreen implements DeviceInterface {
     }
 
 
-    public void captureScreenShot(String arg, String imagePath) {
+    public void captureScreenShot( String imagePath) {
         //util.createDirectory(arg);
         String directoryPath=null;
         File file = new File(imagePath);

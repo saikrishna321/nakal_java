@@ -6,5 +6,5 @@ package com.nakal.devices;
  */
 public interface DeviceInterface {
 
-    public void captureScreenShot(String filePath,String imagePath);
+    public void captureScreenShot(String imagePath);
 }

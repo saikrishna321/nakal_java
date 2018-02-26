@@ -10,8 +10,8 @@ import com.nakal.devices.ViewFactory;
 public class ScreenShooter {
     private ViewFactory viewFactory = new ViewFactory();
 
-    public void screenCapture(String fileName,String imagePath) {
+    public void screenCapture(String imagePath) {
         DeviceInterface runnerInfo = viewFactory.getMobilePlatform(platform);
-        runnerInfo.captureScreenShot(fileName,imagePath);
+        runnerInfo.captureScreenShot(imagePath);
     }
 }
