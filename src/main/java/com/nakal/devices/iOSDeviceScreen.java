@@ -1,11 +1,14 @@
 package com.nakal.devices;
 
 import static com.nakal.ScreenExecutor.NakalAttributeValidator.isCompareMode;
+
+import com.nakal.ScreenExecutor.NakalAttributeValidator;
 import com.nakal.utils.CommandPrompt;
 import com.nakal.utils.Utils;
 import com.thoughtworks.device.Device;
 import com.thoughtworks.device.SimulatorManager;
 import com.thoughtworks.iOS.IOSManager;
+import org.apache.commons.io.FilenameUtils;
 
 
 import java.io.File;
@@ -31,18 +34,22 @@ public class iOSDeviceScreen implements DeviceInterface {
     }
 
     public void captureScreenShot(String screenShotPath,String imagePath){
-        utils.createDirectory(screenShotPath);
-        File f = new File(imagePath);
-        if(f.exists()){
+        String directoryPath=null;
+        File file = new File(imagePath);
+        String fileName= file.getName();
+        if(NakalAttributeValidator.isBuildMode() && file.exists()){
             System.out.println("BaseLine Image already Exists");
         }else{
+            if(!file.isDirectory())
+                directoryPath=utils.getParentDirectoryFromFile(file);
+            utils.createDirectory(directoryPath);
             try {
                 if(getIOSUDID().size() != 0) {
                     commandPrompt.runCommand("idevicescreenshot " + imagePath);
                 } else if(simulatorManager.getAllBootedSimulators("iOS").size() != 0) {
-                    imagePath = imagePath.replace(screenShotPath + ".png", "");
+                    fileName= FilenameUtils.removeExtension(fileName);
                     String UDID = simulatorManager.getAllBootedSimulators("iOS").get(0).getUdid();
-                    simulatorManager.captureScreenshot(UDID, screenShotPath, imagePath, "png");
+                    simulatorManager.captureScreenshot(UDID, fileName, directoryPath, "png");
                 } else {
                     System.exit(0);
                 }
