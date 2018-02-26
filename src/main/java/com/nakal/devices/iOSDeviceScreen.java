@@ -31,7 +31,7 @@ public class iOSDeviceScreen implements DeviceInterface {
         return deviceUDIDiOS;
     }
 
-    public void captureScreenShot(String screenShotPath,String imagePath){
+    public void captureScreenShot(String imagePath){
         String directoryPath=null;
         File file = new File(imagePath);
         String fileName= file.getName();

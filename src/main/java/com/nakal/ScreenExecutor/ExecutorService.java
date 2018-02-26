@@ -56,7 +56,7 @@ public class ExecutorService {
     private void screenCaptureAndMaskIfExist(String baseLineImageName,
                                              String image)
             throws IOException, InterruptedException, IM4JavaException {
-        captureScreen(baseLineImageName,image);
+        captureScreen(image);
         applyMaskIfPresent(baseLineImageName,image);
 
     }
@@ -71,8 +71,8 @@ public class ExecutorService {
         imageUtil.maskRegions(image,baseLineImageName);
     }
 
-    private void captureScreen(String fileName, String imagepath){
-        new ScreenShooter().screenCapture(fileName,imagepath);
+    private void captureScreen(String imagepath){
+        new ScreenShooter().screenCapture(imagepath);
     }
     private void applyMaskImage(String maskedRegionImage) throws InterruptedException, IOException, IM4JavaException {
         imageUtil.maskImage(maskedRegionImage, screenPaths.getMaskImage());
