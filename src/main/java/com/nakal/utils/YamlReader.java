@@ -1,13 +1,17 @@
 package com.nakal.utils;
 
 import static com.nakal.ScreenExecutor.Configuration.baseDirectory;
+import static com.nakal.ScreenExecutor.Configuration.maskImage;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.isYamlPresent;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.hasAttributeInYaml;
 import org.yaml.snakeyaml.Yaml;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by shridhk on 12/20/17.
@@ -53,4 +57,21 @@ public class YamlReader {
         File file = new File(fileName);
         return file.exists();
     }
+
+    public String fetchValueFromYaml(String screenName) throws FileNotFoundException {
+        Set mask_region =
+                ((LinkedHashMap) ((LinkedHashMap) YamlReader.getInstance().getValue(maskImage))
+                        .get(screenName)).entrySet();
+        String maskingRegions = "";
+        for (Object regions : mask_region) {
+            maskingRegions =
+                    maskingRegions + " rectangle " + regions.toString().split("=")[1].toString()
+                            .replace("[", "").replace("]", "").trim();
+        }
+        return maskingRegions;
+    }
+
+
+
+
 }

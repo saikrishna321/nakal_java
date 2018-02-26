@@ -1,8 +1,8 @@
 package com.nakal.devices;
-import static com.nakal.ScreenExecutor.NakalExecutor.isAndroid;
-import static com.nakal.ScreenExecutor.NakalExecutor.isChrome;
-import static com.nakal.ScreenExecutor.NakalExecutor.isiOS;
-import static com.nakal.ScreenExecutor.NakalExecutor.isSafari;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.isAndroid;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.isChrome;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.isiOS;
+import static com.nakal.ScreenExecutor.NakalAttributeValidator.isSafari;
 
 
 public class ViewFactory{

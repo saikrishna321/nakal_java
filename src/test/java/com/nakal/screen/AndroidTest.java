@@ -5,7 +5,6 @@ import com.nakal.imageutil.ImageUtil;
 import org.im4java.core.IM4JavaException;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.io.IOException;
 
 /**
@@ -15,8 +14,6 @@ public class AndroidTest {
 
     ImageUtil imageUtil = new ImageUtil();
     NakalExecutor nakalExecutor = new NakalExecutor();
-
-
 
     @Test
     public void verifyImagesAreSimilar() throws InterruptedException, IOException, IM4JavaException {
