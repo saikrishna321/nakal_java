@@ -1,10 +1,7 @@
 package com.nakal.utils;
 
-import static com.nakal.ScreenExecutor.Configuration.baseDirectory;
-import static com.nakal.ScreenExecutor.Configuration.maskImage;
-import static com.nakal.ScreenExecutor.NakalAttributeValidator.isYamlPresent;
-import static com.nakal.ScreenExecutor.NakalAttributeValidator.hasAttributeInYaml;
 import org.yaml.snakeyaml.Yaml;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +9,9 @@ import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+
+import static com.nakal.ScreenExecutor.Configuration.baseDirectory;
+import static com.nakal.ScreenExecutor.Configuration.maskImage;
 
 /**
  * Created by shridhk on 12/20/17.
@@ -70,8 +70,6 @@ public class YamlReader {
         }
         return maskingRegions;
     }
-
-
 
 
 }

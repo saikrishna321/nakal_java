@@ -1,20 +1,16 @@
 package com.nakal.imageutil;
 
-import static com.nakal.ScreenExecutor.Configuration.maskImage;
 import static com.nakal.ScreenExecutor.NakalAttributeValidator.hasAttributeInYaml;
 import static com.nakal.ScreenExecutor.NakalAttributeValidator.isYamlPresent;
 
 import com.nakal.utils.YamlReader;
 import org.im4java.core.*;
 import org.im4java.process.ArrayListErrorConsumer;
-import org.yaml.snakeyaml.Yaml;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+
 
 /**
  * Created by saikrisv on 22/02/16.

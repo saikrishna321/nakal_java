@@ -1,7 +1,5 @@
 package com.nakal.devices;
 
-import static com.nakal.ScreenExecutor.NakalAttributeValidator.isCompareMode;
-
 import com.nakal.ScreenExecutor.NakalAttributeValidator;
 import com.nakal.utils.CommandPrompt;
 import com.nakal.utils.Utils;
