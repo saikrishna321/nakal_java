@@ -1,34 +1,29 @@
 package com.nakal.utils;
 
-import static com.nakal.ScreenExecutor.Configuration.baseDirectory;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import static com.nakal.ScreenExecutor.NakalAttributeValidator.isBuildMode;
-import static com.nakal.ScreenExecutor.NakalAttributeValidator.isCompareMode;
 
 /**
  * Created by saikrisv on 22/02/16.
  */
 public class Utils {
 
-    public File file;
-
     public void createDirectory(String directoryPath) {
 
         deleteDirectory(directoryPath);
-        File file= new File(directoryPath);
-        if(!file.exists()){
+        File file = new File(directoryPath);
+        if (!file.exists()) {
             if (file.mkdirs()) {
-                    System.out.println("BaseLine Image Directory is created!");
-                } else {
-                    System.out.println("Failed to create BaseLine image directory!");
-                }
+                System.out.println("BaseLine Image Directory is created!");
+            } else {
+                System.out.println("Failed to create BaseLine image directory!");
+            }
         }
     }
 
-    public void deleteDirectory(String path) {
+    private void deleteDirectory(String path) {
 
         File file = new File(path);
         if (file.isDirectory()) {
