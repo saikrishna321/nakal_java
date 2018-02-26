@@ -115,25 +115,12 @@ public class ImageUtil {
     /**
      * @param actualImage
      * @param maskImage
-     * @param maskedImage
      * @throws IOException
      * @throws InterruptedException
      * @throws IM4JavaException
      */
-    public void maskImage(String actualImage, String maskImage, String maskedImage)
-            throws IOException, InterruptedException, IM4JavaException {
-        IMOperation op = new IMOperation();
-        op.addImage(actualImage);
-        op.addImage(maskImage);
-        op.alpha("on");
-        op.compose("DstOut");
-        op.composite();
-        op.addImage(maskedImage);
-        ConvertCmd convert = new ConvertCmd();
-        convert.run(op);
-    }
 
-    public void maskImage1(String actualImage, String maskImage)
+    public void maskImage(String actualImage, String maskImage)
             throws IOException, InterruptedException, IM4JavaException {
         String maskedImage=actualImage;
         IMOperation op = new IMOperation();
