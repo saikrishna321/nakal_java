@@ -28,9 +28,8 @@ public class ExecutorService {
         String expectedImage=screenPaths.getExpectedImage();
         String diffImage=screenPaths.getDiffImage();
         screenCaptureAndMaskIfExist(baseLineImageName,actualImage);
-        if (threshold >0) {
-            if (imageUtil.compareImages(expectedImage,
-                    actualImage,diffImage ))
+        if (threshold >0 && imageUtil.compareImages(expectedImage,
+                actualImage,diffImage )) {
                 return true;
         }else{
             if (imageUtil.compareImages(expectedImage,
