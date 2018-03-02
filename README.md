@@ -6,6 +6,8 @@
 	<br>
 </h1>
 
+[![Build Status](https://travis-ci.org/saikrishna321/nakal_java.svg?branch=master)](https://travis-ci.org/saikrishna321/nakal_java)
+
 Automated visual testing of Android/iOS/Web applications.
 
 ![ScreenShot](https://raw.githubusercontent.com/saikrishna321/nakal_java/master/difference_HomeScreen1.png)
