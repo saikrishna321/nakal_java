@@ -1,0 +1,19 @@
+language: java
+os:
+  - linux
+sudo: enabled
+dist: trusty
+before_script:
+  - rm -rf ImageMagick*
+  - sudo apt-get install build-essential checkinstall && sudo apt-get build-dep imagemagick -y
+  - wget http://www.imagemagick.org/download/ImageMagick.tar.gz
+  - tar xzvf ImageMagick.tar.gz
+  - cd "$(ls|grep ImageMagick-)"
+  - pwd
+  - ./configure && make
+  - sudo checkinstall -y
+  - sudo ldconfig /usr/local/lib
+  - cd ..
+
+script:
+  - mvn clean -Dtest=NakalTest test
